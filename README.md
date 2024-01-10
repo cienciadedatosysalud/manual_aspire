@@ -28,6 +28,12 @@
 - [References](#references)
 
 
+<p align="center">
+  <a href="https://github.com/cienciadedatosysalud/manual_aspire?tab=readme-ov-file#despliega-tu-pipeline-de-analisis-usando-aspire"> :es: Español </a> •
+  <a href="https://latent.space"> :uk: English </a> 
+</p>
+
+
 # Despliega tu pipeline de análisis usando ASPIRE
 
 Bienvenido al tutorial para aprender a desplegar tu pipeline de análisis obtenido del uso de la librería Common Data Model Builder usando ASPIRE (Analytic Software Pipeline Interface for Reproducible Execution). 
