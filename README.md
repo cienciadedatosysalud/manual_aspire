@@ -29,7 +29,9 @@
 
 
 <p align="center">
+  
   [:es: Español](#despliega-tu-pipeline-de-analisis-usando-aspire) • [:uk: English](#como-usar-aspire) 
+  
 </p>
 
 
