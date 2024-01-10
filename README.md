@@ -29,8 +29,7 @@
 
 
 <p align="center">
-  <a href="https://github.com/cienciadedatosysalud/manual_aspire?tab=readme-ov-file#despliega-tu-pipeline-de-analisis-usando-aspire"> :es: Español </a> •
-  <a href="https://latent.space"> :uk: English </a> 
+  [:es: Español](#despliega-tu-pipeline-de-analisis-usando-aspire) • [:uk: English](#como-usar-aspire) 
 </p>
 
 
