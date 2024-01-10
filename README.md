@@ -122,7 +122,10 @@ Todas las dependencias de ASPIRE están instaladas en el entorno (environment) d
 
 En este punto es necesario actualizar el entorno **aspire** y añadir las dependencias restantes para poder ejecutar nuestros scripts de análisis. 
 
-#### Modifique el fichero env_project.yaml
+> [!TIP]
+> Apunta durante el desarrollo del código de análisis todas las liberías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código dependencias que no se utilizan declaradas.
+
+#### Declaración de dependencias: fichero env_project.yaml
 
 El fichero **env_project.yaml** es un fichero que sigue las especificaciones YAML de Conda.
 
@@ -135,16 +138,67 @@ Los archivos YAML de Conda tienen una estructura simple y legible, donde cada el
 > [!NOTE]  
 > Un canal es una estructura de repositorios independiente y aislada que se utiliza para clasificar y administrar más fácilmente un servidor de paquetes. (más [información](https://mamba.readthedocs.io/en/latest/advanced_usage/more_concepts.html))
 
-<embed src="env_project.yaml" type="text/yaml">
+Cambia el ejemplo proporcionado por las librerías necesarias para el análisis y disponibles en los canales declarado (channels). Por ejemplo:
 
-### Fichero Dockerfile
+``` yaml
+name: aspire
+channels:
+ - conda-forge
+dependencies:
+- r-sf=1.0_14
+- r-sjmisc=2.8.9
+- r-gt=0.9.0
+- r-cowplot=1.1.1
+- r-ggalluvial=0.12.5
+- r-ggrepel=0.9.3
+- r-ggplot2=3.4.2
+- r-plotly=4.10.2
+- r-htmlwidgets=1.6.2
+- pip:
+  - ydata-profiling==4.6.0
+- pandas==2.1.0
+```
+
+<details>
+
+<summary>Dockerfile</summary>
+
+### You can add a header
+
+You can add text within a collapsed section. 
+
+You can add an image or a code block, too.
+
+```dockerfile
+   puts "Hello World"
+```
+
+</details>
+
+
+
+#### Instalación manual: fichero Dockerfile
+
+Es posible que algún paquete/librería no se encuentre en ninguno de los canales utilizados por Micromamba y se tenga que instalar de forma manual dentro del fichero Dockerfile.
+
+Para realizarlo, modifique el fichero Dockerfile y añada el fragmento de código para que se instale la librería en el entorno aspire.
+
+```
+micromamba run -n aspire Rscript -e "remotes::install_github('gadenbuie/epoxy')"
+```
+
+En este ejemplo, se instala desde GitHub la librería epoxy de R haciendo uso de la librería *remotes*. Ahora el fichero Dockerfile se debería ver de la siguiente manera:
+
+```dockerfile
+# Installing dependencies
+RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
+    && micromamba run -n aspire Rscript -e "remotes::install_github('gadenbuie/epoxy')" \ 
+    && micromamba clean --all --yes \
+    && rm -rf /opt/conda/conda-meta /tmp/env_project.yaml
+```
 
 > [!NOTE]  
 > Un environment o entorno es un conjunto de paquetes y dependencias que se instalan en una ubicación específica y que se pueden activar o desactivar según se necesiten. (más [información](https://mamba.readthedocs.io/en/latest/user_guide/concepts.html))
-
-
-> [!TIP]
-> Apunta durante el desarrollo del código de análisis todas las liberías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código dependencias que no se utilizan declaradas.
 
 
 > [!CAUTION]
