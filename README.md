@@ -71,6 +71,10 @@ ASPIRE usa [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/microm
 
 La imagen base de ASPIRE tiene por defecto instalado el siguiente paquete de software (más información, enlace al readme con lo instalado).
 
+- Python
+- R
+- Quarto
+- Librerias/paquetes:
 <table>
 <tr><td>
 
@@ -112,28 +116,6 @@ La imagen base de ASPIRE tiene por defecto instalado el siguiente paquete de sof
 
 </td>
 
-<td>
-
-| Software  | librería/paquete |
-| ------------- | ------------- |
-| Quarto  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |  |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-| &nbsp;  |   |
-
-
-</td>
-
 </tr> </table>
 
 Todas las dependencias de ASPIRE están instaladas en el entorno (environment) denominado **aspire**.
@@ -149,10 +131,11 @@ Los archivos YAML de Conda son archivos que contienen la información necesaria 
 Los archivos YAML de Conda tienen una estructura simple y legible, donde cada elemento se separa por dos puntos (:) o por guiones (-). Por ejemplo, el siguiente archivo YAML crea un entorno llamado myenv con Python 3.9 y las librerías 
 
 
+
 > [!NOTE]  
 > Un canal es una estructura de repositorios independiente y aislada que se utiliza para clasificar y administrar más fácilmente un servidor de paquetes. (más [información](https://mamba.readthedocs.io/en/latest/advanced_usage/more_concepts.html))
 
-
+<embed src="env_project.yaml" type="text/yaml">
 
 ### Fichero Dockerfile
 
