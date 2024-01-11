@@ -8,11 +8,11 @@
 </p>
 
 
-# Como desplegar tu pipeline de análisis usando ASPIRE
+# Como desplegar los análisis de tu proyecto de investigación usando ASPIRE
 
  [Estructura del repositorio de código](#estructura-del-repositorio-de-código) • [Gestión de dependencias](#gestión-de-dependencias) • [Personalización](#personalización) • [Despliegue](#despliegue-del-pipeline-de-análisis) • [Como usar ASPIRE](#como-usar-aspire)
 
-Bienvenido al tutorial para aprender a desplegar tu pipeline de análisis obtenido del uso de la librería Common Data Model Builder usando ASPIRE (Analytic Software Pipeline Interface for Reproducible Execution). 
+Bienvenido al tutorial para aprender a desplegar los análisis de tu proyecto de investigación configurado a partir del uso de la librería Common Data Model Builder ('cdmb') usando ASPIRE (Analytic Software Pipeline Interface for Reproducible Execution). 
 
 Más información de las herramientas utilizadas:
 <p align="left">
@@ -23,7 +23,7 @@ Más información de las herramientas utilizadas:
 
 ## Estructura del repositorio de código
 
-Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura de proyecto estandarizada que consiste en la estructura de trabajo obtenida de la creación del modelo común de datos utilizando la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudaran a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
+Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura de proyecto estandarizada. En concreto, este tutorial se basa en la integración de la estructura de proyecto del modelo común de datos generada a partir de la utilización de la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudaran a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
 
 Obteniendo una estructura de proyecto como la siguiente:
 
@@ -34,17 +34,17 @@ Obteniendo una estructura de proyecto como la siguiente:
 > Puedes utilizar este repositorio como plantilla en el despliegue de tu pipeline de análisis. Para más información, visite [Crear un repositorio desde una plantilla](https://docs.github.com/es/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
 
 > [!IMPORTANT]  
-> Revisa tu fichero .gitignore, asegurate de que no se publica ningún dato sensible utilizado en el desarrollo de los análisis en el respositorio.
+> Revisa tu fichero `.gitignore`, asegúrate que no se publica ningún dato sensible utilizado en el desarrollo de los análisis en el repositorio.
 
 
 
 ## Gestión de dependencias
 
-En el siguiente apartado vamos a hablar de los elementos que se encargan de instalar las dependencias de tu código de análisis.
+En este apartado trabajaremos los elementos que se encargan de instalar las dependencias (i.e., paquetes y/o librerías) requeridas por tus análisis.
 
 ASPIRE usa [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) para la gestión de dependencias de librerías y paquetes. Micromamba es una versión ligera y rápida de Mamba, un gestor de paquetes y entornos para Python y otros lenguajes.
 
-La imagen base de ASPIRE tiene por defecto instalado el siguiente paquete de software (más información, enlace al readme con lo instalado).
+La imagen base de ASPIRE (contenedor Docker) tiene instalado por defecto el siguiente conjunto de tecnologías/programas (más información, enlace al README con lo instalado).
 
 - Python
 - R
@@ -95,7 +95,7 @@ La imagen base de ASPIRE tiene por defecto instalado el siguiente paquete de sof
 
 Todas las dependencias de ASPIRE están instaladas en el entorno (environment) denominado **aspire**.
 
-En este punto es necesario actualizar el entorno **aspire** y añadir las dependencias restantes para poder ejecutar nuestros scripts de análisis. 
+<!--En este punto - Qué punto es este? Explícalo... Una vez configurado un proyecto utilizando la librería cdmb necesitarás actualizar--> es necesario actualizar el entorno **aspire** y añadir las dependencias restantes para poder ejecutar nuestros scripts de análisis. 
 
 > [!TIP]
 > Apunta durante el desarrollo del código de análisis todas las liberías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código dependencias que no se utilizan declaradas.
