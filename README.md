@@ -1,41 +1,16 @@
 ![Logo of the project](https://cienciadedatosysalud.org/wp-content/uploads/logo-Data-Science-VPM.png)
 
 
-- [ASPIRE (Analytic Software Pipeline Interface for Reproducible Execution)](#aspire-analytic-software-pipeline-interface-for-reproducible-execution)
-  
-- [Common Data Model Builder](#authoring)
-- [Repositorio Github](#github)
-- [Automatización del repositorio](#github-automatization)
-    - [GitHub Action](#github-action)
-    - [Referenciar y citar contenido](#zenodo)
-- [Docker](#docker)
-    - [Dockerfile](#dockerfle)
-- [Dependencias](#authoring)
-    - [Dependencias código de análisis](#authoring)
-    - [Dependencias de sistema](#authoring)
-- [Personalización](#how-to-contribute)
-    - [Logo del proyecto](#how-to-use-the-application)
-    - [Uso horario](#how-to-use-the-application)
-- [Construcción imagen de docker](#dockerimage)
-- [Despliegue y ejecución del Pipeline de análisis](#dockercontainer)
-    - [Descarga de la imagen del pipeline](#dockerpull)
-    - [ejecución del contenedor](#dockerrun)
-        - [Crear y correr el contenedor](#dockerrunform)
-        - [Puertos](#dockerports)
-        - [Visibilidad](#dockerports)
-    - [Actualización](#dockerpull)
-- [How to use the application](#how-to-use-the-application)
-- [References](#references)
-
-
 <p align="center">
   
-  [:es: Español](#despliega-tu-pipeline-de-analisis-usando-aspire) • [:uk: English](#como-usar-aspire) 
+  [:es: Español](#como-desplegar-tu-pipeline-de-análisis-usando-aspire) • [:uk: English](#how-to-deploy-your-analysis-pipeline-using-aspire) 
   
 </p>
 
 
-# Despliega tu pipeline de análisis usando ASPIRE
+# Como desplegar tu pipeline de análisis usando ASPIRE
+
+ [Estructura del repositorio de código](#estructura-del-repositorio-de-código) • [Gestión de dependencias](#gestión-de-dependencias) • [Personalización](#personalización) • [Despliegue](#despliegue-del-pipeline-de-análisis) • [Como usar ASPIRE](#como-usar-aspire)
 
 Bienvenido al tutorial para aprender a desplegar tu pipeline de análisis obtenido del uso de la librería Common Data Model Builder usando ASPIRE (Analytic Software Pipeline Interface for Reproducible Execution). 
 
@@ -46,7 +21,7 @@ Más información de las herramientas utilizadas:
 </p>
 
 
-# Estructura del repositorio de código
+## Estructura del repositorio de código
 
 Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura de proyecto estandarizada que consiste en la estructura de trabajo obtenida de la creación del modelo común de datos utilizando la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudaran a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
 
@@ -125,7 +100,7 @@ En este punto es necesario actualizar el entorno **aspire** y añadir las depend
 > [!TIP]
 > Apunta durante el desarrollo del código de análisis todas las liberías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código dependencias que no se utilizan declaradas.
 
-#### Declaración de dependencias: fichero env_project.yaml
+### Declaración de dependencias: fichero env_project.yaml
 
 El fichero **env_project.yaml** es un fichero que sigue las especificaciones YAML de Conda.
 
@@ -176,7 +151,7 @@ You can add an image or a code block, too.
 
 
 
-#### Instalación manual: fichero Dockerfile
+### Instalación manual: fichero Dockerfile
 
 Es posible que algún paquete/librería no se encuentre en ninguno de los canales utilizados por Micromamba y se tenga que instalar de forma manual dentro del fichero Dockerfile.
 
@@ -204,6 +179,13 @@ RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
 > micromamba es posible que modifique el versionado de algunas librerias respecto a lo especificado para asegurar compatibilidades. Por favor, compruebe en local que todo funciona correctamente (Construcción de la imagen -> Despliegue -> Ejecución del pipeline de análisis).
 
 
+## Personalización
+
+### Añadir logo
+
+### Cambiar hora del sistema
+
+
 ## Automatización del repositorio
 
 ### GitHub Actions
@@ -213,7 +195,7 @@ RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
 
 https://docs.github.com/es/repositories/archiving-a-github-repository/referencing-and-citing-content
 
-## Despliegue
+## Despliegue del pipeline de análisis
 
 ### Descarga la imagen pipeline
 ```console
@@ -247,6 +229,20 @@ foo
 
 ### Obtener outputs
 
+### Referencias
+
+# How to deploy your analysis pipeline using ASPIRE
+
+[Code repository structure](#code-repository-structure) • [Dependency management](#dependency-management) • [Customization](#customization) • [Deployment](#deployment-of-the-analysis-pipeline) • [How to use ASPIRE](#how-to-use-aspire)
+
+## Code repository structure
+
+## Dependency management
+
+## Customization
+
+## Deployment of the analysis pipeline
+
+## How to use ASPIRE
 
 
-## Referencias
