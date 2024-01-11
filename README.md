@@ -52,7 +52,7 @@ Para poder empaquetar nuestro pipeline de análisis es necesario partir de una e
 
 Obteniendo una estructura de proyecto como la siguiente:
 
-(imagen de la estructura)
+![github repo structure](.github/img/github_repository.png)
 
 
 > [!TIP]
@@ -131,14 +131,13 @@ El fichero **env_project.yaml** es un fichero que sigue las especificaciones YAM
 
 Los archivos YAML de Conda son archivos que contienen la información necesaria para crear y reproducir un entorno de Conda, como el nombre, los canales, las dependencias y las variables de entorno. 
 
-Los archivos YAML de Conda tienen una estructura simple y legible, donde cada elemento se separa por dos puntos (:) o por guiones (-). Por ejemplo, el siguiente archivo YAML crea un entorno llamado myenv con Python 3.9 y las librerías 
-
-
+Los archivos YAML de Conda tienen una estructura simple y legible, donde cada elemento se separa por dos puntos (:) o por guiones (-). 
 
 > [!NOTE]  
 > Un canal es una estructura de repositorios independiente y aislada que se utiliza para clasificar y administrar más fácilmente un servidor de paquetes. (más [información](https://mamba.readthedocs.io/en/latest/advanced_usage/more_concepts.html))
 
-Cambia el ejemplo proporcionado por las librerías necesarias para el análisis y disponibles en los canales declarado (channels). Por ejemplo:
+Cambia el ejemplo proporcionado por las librerías necesarias para el análisis y disponibles en los canales declarado (channels). Por ejemplo, el siguiente archivo YAML actualiza el entorno llamado aspire usando el canal [conda-forge](https://conda-forge.org/) con pandas versión 2.1.0, el paquete plotly de R versión 4.10.2, etc. 
+
 
 ``` yaml
 name: aspire
