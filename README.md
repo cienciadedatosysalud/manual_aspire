@@ -14,12 +14,38 @@
 
 Bienvenido al tutorial para aprender a desplegar los análisis de tu proyecto de investigación configurado a partir del uso de la librería Common Data Model Builder ('cdmb') usando ASPIRE (Analytic Software Pipeline Interface for Reproducible Execution). 
 
+
+```mermaid
+flowchart LR
+   pregunta["`This **is** _Markdown_`"]
+   newLines["`Line1 Line 2 Line 3`"]
+   pregunta --> id1(Stop)
+```
+
+```mermaid
+journey
+    title My working day
+    section Go to work
+      Make tea:20: Me
+      Go upstairs:0: Me
+      Do work: : Me, Cat
+    section Go home
+      Go downstairs: : Me
+      Sit down: : Me
+```
+
+- [ ] 1. Crea tu modelo común de datos usando la librería [cdmb](https://github.com/cienciadedatosysalud/cdmb).
+- [ ] 2. Implementa tus scripts de análisis en R o Python en la estructura de trabaja que se obtiene del [cdmb](https://github.com/cienciadedatosysalud/cdmb).
+- [ ] 3. Realiza el testeo adecuado de tus scripts con dato sintético.
+- [ ] 4. Sigue este tutorial :blush:
+
 Más información de las herramientas utilizadas:
 <p align="left">
 <a href="https://github.com/cienciadedatosysalud/aspire"><img width="375" src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/pin/?username=cienciadedatosysalud&repo=ASPIRE&theme=react&bg_color=1F222E&title_color=F85D7F&icon_color=F8D866&hide_border=true&show_icons=false" alt="aspire"></a>
 <a href="https://github.com/cienciadedatosysalud/cdmb"><img width="430" src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/pin/?username=cienciadedatosysalud&repo=cdmb&theme=react&bg_color=1F222E&title_color=F85D7F&icon_color=F8D866&hide_border=true&show_icons=false" alt="cdmb"></a>
 </p>
 
+Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial.
 
 ## Estructura del repositorio de código
 
