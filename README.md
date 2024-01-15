@@ -61,10 +61,12 @@ Más información de las herramientas utilizadas:
 
 Una vez formulada la pregunta de investigación, completa las siguientes tareas antes de empezar el tutorial:
 
-- [ ] 1. Crea tu modelo común de datos usando la librería [cdmb](https://github.com/cienciadedatosysalud/cdmb).
-- [ ] 2. Implementa tus scripts de análisis en R o Python en la estructura de trabaja que se obtiene del [cdmb](https://github.com/cienciadedatosysalud/cdmb).
-- [ ] 3. Realiza el testeo adecuado de tus scripts con dato sintético.
-- [ ] 4. Sigue este tutorial :blush:
+Tareas:
+
+- [ ] 1. Crear el modelo común de datos usando la librería [cdmb](https://github.com/cienciadedatosysalud/cdmb).
+- [ ] 2. Implementar los scripts de análisis en R o Python en la estructura de trabaja que se obtiene del [cdmb](https://github.com/cienciadedatosysalud/cdmb).
+- [ ] 3. Realizar el testeo adecuado de los scripts con dato sintético.
+- [ ] 4. Seguir este tutorial :blush:
 
 Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial.
 
@@ -78,16 +80,18 @@ Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial
     Estructura de proyecto : Añade la estructura de trabajo obtenida del cdmb.
                            : Añade el fichero env_project.yaml
                            : Añade el fichero Dockerfile
+                           : Añade el fichero .dockerignore
     Gestión de dependencias : Modifica el fichero env_project.yaml
                             : Modifica el fichero Dockerfile
     Personalización : Añade el logo
                     : Establezca horario en la imagen Docker
-    Automatización del repositorio : Añade el directorio .github/workflows
-                                   : Añade la acción de GitHub build_image.yml
-                                   : [Opcional] Referenciar y citar repositorio
-                                   : Crear lanzamiento
+    Automatización del repositorio : [GitHub] Añade el directorio .github/workflows
+                                   : [GitHub] Añade la acción de GitHub build_image.yml
+                                   : [GitHub Opcional] Referenciar y citar repositorio
+                                   : [GitHub] Crear lanzamiento
                                    : Crear imagen Docker del proyecto
-    Despliegue : Pull imagen Docker
+    Despliegue : Build imagen Docker
+               : Pull imagen Docker
                : Run imagen Docker
                : [Opcional] Actualizar imagen Docker
                : Visualizar aplicación (ASPIRE)
@@ -99,6 +103,12 @@ Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial
 ## Estructura del repositorio de código
 
 Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura de proyecto estandarizada. En concreto, este tutorial se basa en la integración de la estructura de proyecto del modelo común de datos generada a partir de la utilización de la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudaran a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
+
+Tareas:
+- [ ] Añadir el fichero `env_project.yaml`
+- [ ] Añadir el fichero `Dockerfile`
+- [ ] Añadir el fichero `.dockerignore`
+
 
 Obteniendo una estructura de proyecto como la siguiente:
 
@@ -169,11 +179,15 @@ La imagen base de ASPIRE (contenedor Docker) tiene instalado por defecto el sigu
 </tr> </table>
 
 Todas las dependencias de ASPIRE están instaladas en el entorno (environment) denominado **aspire**. 
+Una vez completado el paso anterior es necesario actualizar el entorno **aspire** y añadir las dependencias restantes para poder ejecutar nuestros scripts de análisis. 
 
-<!--En este punto - Qué punto es este? Explícalo... Una vez configurado un proyecto utilizando la librería cdmb necesitarás actualizar--> es necesario actualizar el entorno **aspire** y añadir las dependencias restantes para poder ejecutar nuestros scripts de análisis. 
+Tareas:
+
+- [ ] Modificar el fichero env_project.yaml
+- [ ] Modificar el fichero Dockerfile 
 
 > [!TIP]
-> Apunta durante el desarrollo del código de análisis todas las liberías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código dependencias que no se utilizan declaradas.
+> Apunta durante el desarrollo del código de análisis todas las liberías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código declaradas dependencias que no se utilizan.
 
 ### Declaración de dependencias: fichero env_project.yaml
 
@@ -233,10 +247,15 @@ RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
 
 
 > [!CAUTION]
-> micromamba es posible que modifique el versionado de algunas librerias respecto a lo especificado para asegurar compatibilidades. Por favor, compruebe en local que todo funciona correctamente (Construcción de la imagen -> Despliegue -> Ejecución del pipeline de análisis).
+> Micromamba es posible que modifique el versionado de algunas librerias respecto a lo especificado para asegurar compatibilidades. Por favor, compruebe en local que todo funciona correctamente (Construcción de la imagen -> Despliegue -> Ejecución del pipeline de análisis).
 
 
 ## Personalización
+
+Tareas: 
+
+- [ ] [Opcional] Añadir el fichero main_logo.png a la estructura de trabajo
+- [ ] [Opcional] Modificar el fichero Dockerfile y establecer zona horaria
 
 ### Añadir logo
 ASPIRE permite cambiar el logo que se muestra en la landing page de la aplicación. Sigue los siguientes pasos para realizarlo de forma correcta:
@@ -339,6 +358,13 @@ ENTRYPOINT ["micromamba","run","-n","aspire","/opt/entrypoint.sh"]
 
 ## Automatización del repositorio
 
+Tareas:
+
+- [ ] [GitHub] Crear directorio `.github/workflows`
+- [ ] [GitHub] Crear acción de GitHub `build_image.yml`
+- [ ] [GitHub] Aprende a referenciar y citar contenido del repositorio
+- [ ] [GitHub] Crea un nuevo lanzamiento (release)
+
 ### GitHub Actions
 
 Las Acciones de GitHub facilitan la automatización de tus flujos de trabajo de Software. 
@@ -413,6 +439,14 @@ Si quieres aprender como archivar tu repositorio en Zenodo o Figshare, visite [R
 
 ## Despliegue del pipeline de análisis
 
+Tareas:
+
+- [ ] Crear imagen de Docker de tu proyecto
+- [ ] Pull imagen de Docker
+- [ ] Run imagen Docker
+- [ ] [Opcional] Actualizar imagen Docker
+- [ ] Comprobar que la aplicación funciona (Visualizar aplicación (ASPIRE))
+
 ### Descarga la imagen pipeline
 ```console
 myuser@:~$ whoami
@@ -438,6 +472,12 @@ foo
 
 
 ## Como usar ASPIRE
+
+Tareas:
+
+- [ ] Mapear ficheros de entrada
+- [ ] Ejecutar scripts de análisis
+- [ ] Obtener ficheros de salida (outputs)
 
 ### Mapear input de entrada
 
