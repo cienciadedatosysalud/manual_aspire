@@ -10,34 +10,48 @@
 
 # Como desplegar los análisis de tu proyecto de investigación usando ASPIRE
 
- [Estructura del repositorio de código](#estructura-del-repositorio-de-código) • [Gestión de dependencias](#gestión-de-dependencias) • [Personalización](#personalización) • [Despliegue](#despliegue-del-pipeline-de-análisis) • [Como usar ASPIRE](#como-usar-aspire)
-
 Bienvenido al tutorial para aprender a desplegar los análisis de tu proyecto de investigación configurado a partir del uso de la librería Common Data Model Builder ('cdmb') usando ASPIRE (Analytic Software Pipeline Interface for Reproducible Execution). 
 
+En primer lugar, echemos un vistazo a la metodología de trabajo seguida en una arquitectura federada. 
 
 ```mermaid
+---
+title: Flujo de trabajo en una arquitectura federada
+---
 flowchart LR
-   pregunta["`This **is** _Markdown_`"]
-   newLines["`Line1 Line 2 Line 3`"]
-   pregunta --> id1(Stop)
+   question["Research\n Question"]
+   cdm["Common\n Data Model"]
+   synthetic["Synthetic\n dataset"]
+   quality["Quality\nAnalysis\n(scripts)"]
+   analysis["Analysis\n(scripts)"]
+   usecase["Use Case\n Deployment"]
+   outputs["Outputs\n recollection\n & synthesis"]
+   deliverable["Use Case\n Deliverable\n production"]
+   question --> cdm
+   cdm -- Data hubs / \n Domain Experts --> synthetic
+   synthetic -- CDM  / \n Availability Survey --> cdm
+   synthetic --> quality
+   quality -- IT + Epi methods +\n Domain Experts --> analysis
+   analysis --> quality
+   analysis --> usecase
+   usecase --> outputs
+   outputs --> deliverable
+
 ```
 
 ```mermaid
 journey
-    title My working day
-    section Go to work
-      Make tea:20: Me
-      Go upstairs:0: Me
-      Do work: : Me, Cat
-    section Go home
-      Go downstairs: : Me
-      Sit down: : Me
+    title Flujo de trabajo en una arquitectura federada
+    section Common Data Model Builder (cdmb)
+      Common Data Model:20:cdmb
+      Synthetic dataset:20: cdmb
+      Quality Analysis (scripts): 20: cdmb
+      Analysis (scripts): 20: cdmb, aspire
+    section Aspire
+      Use Case Deployment: 20 : aspire
+      Outputs recollection & synthesis: 20 : aspire
+      Use Case Deliverable production: 20 : aspire
 ```
-
-- [ ] 1. Crea tu modelo común de datos usando la librería [cdmb](https://github.com/cienciadedatosysalud/cdmb).
-- [ ] 2. Implementa tus scripts de análisis en R o Python en la estructura de trabaja que se obtiene del [cdmb](https://github.com/cienciadedatosysalud/cdmb).
-- [ ] 3. Realiza el testeo adecuado de tus scripts con dato sintético.
-- [ ] 4. Sigue este tutorial :blush:
 
 Más información de las herramientas utilizadas:
 <p align="left">
@@ -45,7 +59,19 @@ Más información de las herramientas utilizadas:
 <a href="https://github.com/cienciadedatosysalud/cdmb"><img width="430" src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/pin/?username=cienciadedatosysalud&repo=cdmb&theme=react&bg_color=1F222E&title_color=F85D7F&icon_color=F8D866&hide_border=true&show_icons=false" alt="cdmb"></a>
 </p>
 
+Una vez formulada la pregunta de investigación, completa las siguientes tareas antes de empezar el tutorial:
+
+- [ ] 1. Crea tu modelo común de datos usando la librería [cdmb](https://github.com/cienciadedatosysalud/cdmb).
+- [ ] 2. Implementa tus scripts de análisis en R o Python en la estructura de trabaja que se obtiene del [cdmb](https://github.com/cienciadedatosysalud/cdmb).
+- [ ] 3. Realiza el testeo adecuado de tus scripts con dato sintético.
+- [ ] 4. Sigue este tutorial :blush:
+
 Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial.
+
+# Tutorial
+
+ [Estructura del repositorio de código](#estructura-del-repositorio-de-código) • [Gestión de dependencias](#gestión-de-dependencias) • [Personalización](#personalización) • [Despliegue](#despliegue-del-pipeline-de-análisis) • [Como usar ASPIRE](#como-usar-aspire)
+
 
 ## Estructura del repositorio de código
 
@@ -159,24 +185,6 @@ dependencies:
 - pandas==2.1.0
 ```
 
-<details>
-
-<summary>Dockerfile</summary>
-
-### You can add a header
-
-You can add text within a collapsed section. 
-
-You can add an image or a code block, too.
-
-```dockerfile
-   puts "Hello World"
-```
-
-</details>
-
-
-
 ### Instalación manual: fichero Dockerfile
 
 Es posible que algún paquete/librería no se encuentre en ninguno de los canales utilizados por Micromamba y se tenga que instalar de forma manual dentro del fichero Dockerfile.
@@ -208,8 +216,100 @@ RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
 ## Personalización
 
 ### Añadir logo
+ASPIRE permite cambiar el logo que se muestra en la landing page de la aplicación. Sigue los siguientes pasos para realizarlo de forma correcta:
+
+1- Añade tu logo a la estructura de carpetas
+2- Asegurate que el nombre y formato del fichero cumple con "main_logo.png".
+3- Modifica el fichero Dockerfile añadiendo la instrucción que te permite sustituir el logo por defecto por tu logo.
+
+```dockerfile
+COPY --chown=$MAMBA_USER:$MAMBA_USER main_logo.png /temp/main_logo.png
+RUN cp /temp/main_logo.png $(find front -name main_logo**)
+```
+
+> [!IMPORTANT]  
+> El logo debe cumplir con el nombre y el formato exigido: **main_logo.png**.
 
 ### Cambiar hora del sistema
+
+ASPIRE 
+
+```dockerfile
+# Set time Europe/Madrid
+
+RUN micromamba -n aspire install tzdata -c conda-forge && micromamba clean --all --yes \
+    && rm -rf /opt/conda/conda-meta
+ENV TZ=Europe/Madrid
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN micromamba run -n aspire date
+```
+
+
+<details>
+
+<summary>Fichero Dockerfile base</summary>
+
+```dockerfile
+FROM ghcr.io/cienciadedatosysalud/aspire:latest
+
+#########################################################
+# Gestión de dependencias: Instalar liberías de sistema #
+#########################################################
+
+USER root
+RUN apt update && apt install -y --no-install-recommends \
+  && apt install -y xdg-utils \
+  && rm -rf /var/lib/apt/lists/*
+
+#############################################################
+# Personalización: Establecer horario dentro del contenedor #
+#############################################################
+
+# Set time Europe/Madrid
+RUN micromamba -n aspire install tzdata -c conda-forge && micromamba clean --all --yes \
+    && rm -rf /opt/conda/conda-meta
+ENV TZ=Europe/Madrid
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN micromamba run -n aspire date
+
+
+#############################################################
+# Gestión de dependencias: Instalar dependencias declaradas #
+#############################################################
+
+USER $MAMBA_USER
+
+COPY --chown=$MAMBA_USER:$MAMBA_USER env_project.yaml /tmp/env_project.yaml
+
+# Installing dependencies
+RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
+    && micromamba clean --all --yes \
+    && rm -rf /opt/conda/conda-meta /tmp/env_project.yaml
+
+
+#########################################################
+# Copiar la estructura de carpetas en la ruta adecuada  #
+#########################################################
+COPY --chown=$MAMBA_USER:$MAMBA_USER . /home/$MAMBA_USER/projects/your_project
+
+# Cambia el nombre de carpeta 'your_project' por un nombre de carpeta válido que haga referencia a tu proyecto.
+
+################################
+# Personalización: Añadir logo #
+################################
+COPY --chown=$MAMBA_USER:$MAMBA_USER main_logo.png /temp/main_logo.png
+RUN cp /temp/main_logo.png $(find front -name main_logo**)
+
+ENV APP_PORT=3000
+ENV APP_HOST=0.0.0.0
+EXPOSE 3000
+
+WORKDIR /home/$MAMBA_USER
+
+ENTRYPOINT ["micromamba","run","-n","aspire","/opt/entrypoint.sh"]
+```
+
+</details>
 
 
 ## Automatización del repositorio
