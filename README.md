@@ -322,9 +322,10 @@ Las Acciones de GitHub facilitan la automatización de tus flujos de trabajo de 
 En esta plantilla se proporciona el código de una acción que se encarga de crear la imagen Docker de tu proyecto de forma automatizada usando ASPIRE.
 Esta acción se lanza de forma automática cuando se crea un nuevo lanzamiento (release) en el repositorio.
 
-<details>
 
-<summary>Fichero .github/workflows/build_image.yml </summary>
+`.github/workflows/build_image.yml`
+<details>
+<summary>build_image.yml</summary>
 
 ``` yaml
 name: Docker Image CI
