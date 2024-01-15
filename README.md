@@ -145,7 +145,7 @@ La imagen base de ASPIRE (contenedor Docker) tiene instalado por defecto el sigu
 
 </tr> </table>
 
-Todas las dependencias de ASPIRE están instaladas en el entorno (environment) denominado **aspire**.
+Todas las dependencias de ASPIRE están instaladas en el entorno (environment) denominado **aspire**. 
 
 <!--En este punto - Qué punto es este? Explícalo... Una vez configurado un proyecto utilizando la librería cdmb necesitarás actualizar--> es necesario actualizar el entorno **aspire** y añadir las dependencias restantes para poder ejecutar nuestros scripts de análisis. 
 
@@ -249,8 +249,10 @@ RUN micromamba run -n aspire date
 
 <summary>Fichero Dockerfile base</summary>
 
-```dockerfile
+``` dockerfile
 FROM ghcr.io/cienciadedatosysalud/aspire:latest
+ARG pipeline_version="Non-versioned"
+ENV PIPELINE_VERSION=$pipeline_version
 
 #########################################################
 # Gestión de dependencias: Instalar liberías de sistema #
@@ -316,10 +318,69 @@ ENTRYPOINT ["micromamba","run","-n","aspire","/opt/entrypoint.sh"]
 
 ### GitHub Actions
 
+Las Acciones de GitHub facilitan la automatización de tus flujos de trabajo de Software. 
+En esta plantilla se proporciona el código de una acción que se encarga de crear la imagen Docker de tu proyecto de forma automatizada usando ASPIRE.
+Esta acción se lanza de forma automática cuando se crea un nuevo lanzamiento (release) en el repositorio.
+
+<details>
+
+<summary>Fichero .github/workflows/build_image.yml </summary>
+
+``` yaml
+name: Docker Image CI
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+  workflow_dispatch:
+env:
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+jobs:
+  compile:
+    name: Build and push the image
+    runs-on: ubuntu-latest
+    permissions:
+        contents: read
+        packages: write
+        id-token: write # needed for signing the images with GitHub OIDC Token
+    steps:
+      - name: Get tag name from GITHUB_REF
+        run: echo "TAG_NAME=${{ github.ref == '' && 'nonversioned' || github.ref#refs/tags/ }}" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:${{env.TAG_NAME}},ghcr.io/${{ env.IMAGE_NAME }}:latest
+          file: ./Dockerfile
+          build-args: |
+            pipeline_version=${{ env.TAG_NAME }}
+```
+
+</details>
+
+> [!NOTE]  
+> Aprende más sobre [GitHub Actions](https://github.com/features/actions).
+
+> [!NOTE]  
+> Aprende más sobre [Administrar lanzamientos en un repositorio](https://docs.github.com/es/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
 
 ### Referenciar y citar contenido
 
-https://docs.github.com/es/repositories/archiving-a-github-repository/referencing-and-citing-content
+GitHub permite utilizar herramientas de terceros para citar y referenciar contenido. 
+Si quieres aprender como archivar tu repositorio en Zenodo o Figshare, visite [Referenciar y citar contenido](https://docs.github.com/es/repositories/archiving-a-github-repository/referencing-and-citing-content).
+
 
 ## Despliegue del pipeline de análisis
 
