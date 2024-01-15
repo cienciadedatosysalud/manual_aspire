@@ -70,8 +70,31 @@ Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial
 
 # Tutorial
 
- [Estructura del repositorio de código](#estructura-del-repositorio-de-código) • [Gestión de dependencias](#gestión-de-dependencias) • [Personalización](#personalización) • [Despliegue](#despliegue-del-pipeline-de-análisis) • [Como usar ASPIRE](#como-usar-aspire)
+ [Estructura del repositorio de código](#estructura-del-repositorio-de-código) • [Gestión de dependencias](#gestión-de-dependencias) • [Personalización](#personalización) • [Automatización del repositorio](#automatización-del-repositorio) • [Despliegue](#despliegue-del-pipeline-de-análisis) • [Como usar ASPIRE](#como-usar-aspire)
 
+```mermaid
+ timeline
+    title Despliegue y ejecución de tu proyecto
+    Estructura de proyecto : Añade la estructura de trabajo obtenida del cdmb.
+                           : Añade el fichero env_project.yaml
+                           : Añade el fichero Dockerfile
+    Gestión de dependencias : Modifica el fichero env_project.yaml
+                            : Modifica el fichero Dockerfile
+    Personalización : Añade el logo
+                    : Establezca horario en la imagen Docker
+    Automatización del repositorio : Añade el directorio .github/workflows
+                                   : Añade la acción de GitHub build_image.yml
+                                   : [Opcional] Referenciar y citar repositorio
+                                   : Crear lanzamiento
+                                   : Crear imagen Docker del proyecto
+    Despliegue : Pull imagen Docker
+               : Run imagen Docker
+               : [Opcional] Actualizar imagen Docker
+               : Visualizar aplicación (ASPIRE)
+    Usar ASPIRE : Mapear ficheros de entrada
+                : Ejecutar análisis
+                : Obtener ficheros de salida
+```
 
 ## Estructura del repositorio de código
 
@@ -86,7 +109,7 @@ Obteniendo una estructura de proyecto como la siguiente:
 > Puedes utilizar este repositorio como plantilla en el despliegue de tu pipeline de análisis. Para más información, visite [Crear un repositorio desde una plantilla](https://docs.github.com/es/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
 
 > [!IMPORTANT]  
-> Revisa tu fichero `.gitignore`, asegúrate que no se publica ningún dato sensible utilizado en el desarrollo de los análisis en el repositorio.
+> Revisa tus ficheros `.gitignore` y `.dockerignore`, asegúrate que no se publica ningún dato sensible utilizado en el desarrollo de los análisis en el repositorio ni en la imagen Docker.
 
 
 
@@ -320,7 +343,12 @@ ENTRYPOINT ["micromamba","run","-n","aspire","/opt/entrypoint.sh"]
 
 Las Acciones de GitHub facilitan la automatización de tus flujos de trabajo de Software. 
 En esta plantilla se proporciona el código de una acción que se encarga de crear la imagen Docker de tu proyecto de forma automatizada usando ASPIRE.
-Esta acción se lanza de forma automática cuando se crea un nuevo lanzamiento (release) en el repositorio.
+La acción se lanza de forma automática cuando se crea un nuevo lanzamiento (release) en el repositorio. 
+
+La acción crea la imagen Docker con nombre `<account>/<repo>:<tag>` de tu proyecto asignando la etiqueta correspondiente al lanzamiento del repositorio. Esta versión se asigna a la versión del pipeline de análisis.
+
+> [!NOTE]  
+> Aprende más sobre el [empaquetado con Acciones de GitHub](https://docs.github.com/es/actions/publishing-packages/about-packaging-with-github-actions).
 
 
 `.github/workflows/build_image.yml`
