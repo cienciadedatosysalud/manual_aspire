@@ -72,21 +72,21 @@ Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial
 
 # Tutorial
 
- [Estructura del repositorio de código](#estructura-del-repositorio-de-código) • [Gestión de dependencias](#gestión-de-dependencias) • [Personalización](#personalización) • [Automatización del repositorio](#automatización-del-repositorio) • [Despliegue](#despliegue-del-pipeline-de-análisis) • [Como usar ASPIRE](#como-usar-aspire)
+ [Estructura del proyecto](#estructura-del-proyecto) • [Gestión de dependencias](#gestión-de-dependencias) • [Personalización](#personalización) • [Automatización del repositorio](#automatización-del-repositorio) • [Despliegue](#despliegue-del-pipeline-de-análisis) • [Como usar ASPIRE](#como-usar-aspire)
 
 ```mermaid
  timeline
     title Despliegue y ejecución de tu proyecto
-    Estructura de proyecto : Añade la estructura de trabajo obtenida del cdmb.
-                           : Añade el fichero env_project.yaml
-                           : Añade el fichero Dockerfile
-                           : Añade el fichero .dockerignore
-    Gestión de dependencias : Modifica el fichero env_project.yaml
-                            : Modifica el fichero Dockerfile
-    Personalización : Añade el logo
-                    : Establezca horario en la imagen Docker
-    Automatización del repositorio : [GitHub] Añade el directorio .github/workflows
-                                   : [GitHub] Añade la acción de GitHub build_image.yml
+    Estructura de proyecto : Añadir estructura de trabajo obtenida del cdmb.
+                           : Añadir fichero env_project.yaml
+                           : Añadir fichero Dockerfile
+                           : Añadir fichero .dockerignore
+    Gestión de dependencias : Modificar fichero env_project.yaml
+                            : Modificar fichero Dockerfile
+    Personalización : Añadir logo
+                    : Establecer horario en la imagen Docker
+    Automatización del repositorio : [GitHub] Añadir directorio .github/workflows
+                                   : [GitHub] Añadir acción de GitHub "build_image.yml"
                                    : [GitHub Opcional] Referenciar y citar repositorio
                                    : [GitHub] Crear lanzamiento
                                    : Crear imagen Docker del proyecto
@@ -100,7 +100,7 @@ Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial
                 : Obtener ficheros de salida
 ```
 
-## Estructura del repositorio de código
+## Estructura del proyecto
 
 Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura de proyecto estandarizada. En concreto, este tutorial se basa en la integración de la estructura de proyecto del modelo común de datos generada a partir de la utilización de la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudarán a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
 
@@ -119,7 +119,7 @@ Obteniendo una estructura de proyecto como la siguiente:
 > Puedes utilizar este repositorio como plantilla en el despliegue de tu pipeline de análisis. Para más información, visite [Crear un repositorio desde una plantilla](https://docs.github.com/es/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
 
 > [!IMPORTANT]  
-> Revisa tus ficheros `.gitignore` y `.dockerignore`, asegúrate que no se publica ningún dato sensible utilizado en el desarrollo de los análisis en el repositorio ni en la imagen Docker.
+> Revisa tus ficheros `.gitignore` y `.dockerignore`, asegúrate que no se publica ningún dato sensible utilizado en el desarrollo de los análisis en el repositorio de código ni en la imagen Docker.
 
 
 
@@ -129,7 +129,7 @@ En este apartado trabajaremos los elementos que se encargan de instalar las depe
 
 ASPIRE usa [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) para la gestión de dependencias de librerías y paquetes. Micromamba es una versión ligera y rápida de Mamba, un gestor de paquetes y entornos para Python y otros lenguajes.
 
-La imagen base de ASPIRE (contenedor Docker) tiene instalado por defecto el siguiente conjunto de tecnologías/programas (más información, enlace al README con lo instalado).
+La imagen base de ASPIRE (imagen Docker) tiene instalado por defecto el siguiente conjunto de tecnologías/programas (más información, enlace al README con lo instalado).
 
 - Python
 - R
@@ -187,9 +187,9 @@ Tareas:
 - [ ] Modificar el fichero Dockerfile 
 
 > [!TIP]
-> Apunta durante el desarrollo del código de análisis todas las liberías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código declaradas dependencias que no se utilizan.
+> Apunta durante el desarrollo del código de análisis todas las librerías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código declaradas dependencias que no se utilizan.
 
-### Declaración de dependencias: fichero env_project.yaml
+###  Modificar fichero env_project.yaml
 
 El fichero **env_project.yaml** es un fichero que sigue las especificaciones YAML de Conda.
 
@@ -222,9 +222,9 @@ dependencies:
 - pandas==2.1.0
 ```
 
-### Instalación manual: fichero Dockerfile
+### Modificar fichero Dockerfile
 
-Es posible que algún paquete/librería no se encuentre en ninguno de los canales utilizados por Micromamba y se tenga que instalar de forma manual dentro del fichero Dockerfile.
+En ocasiones, es posible que algún paquete/librería no se encuentre en ninguno de los canales utilizados por Micromamba y se tenga que instalar de forma manual especificandolo dentro del fichero Dockerfile.
 
 Para realizarlo, modifique el fichero Dockerfile y añada el fragmento de código para que se instale la librería en el entorno aspire.
 
@@ -258,6 +258,7 @@ Tareas:
 - [ ] [Opcional] Modificar el fichero Dockerfile y establecer zona horaria
 
 ### Añadir logo
+
 ASPIRE permite cambiar el logo que se muestra en la landing page de la aplicación. Sigue los siguientes pasos para realizarlo de forma correcta:
 
 1- Añade tu logo a la estructura de carpetas
@@ -272,9 +273,9 @@ RUN cp /temp/main_logo.png $(find front -name main_logo**)
 > [!IMPORTANT]  
 > El logo debe cumplir con el nombre y el formato exigido: **main_logo.png**.
 
-### Cambiar hora del sistema
+### Establecer horario en la imagen Docker
 
-ASPIRE 
+ Si deseas que la aplicación muestre el horario acorde a tu localización y concuerde la hora de la creación de los ficheros de salida con tu zona horaria, modifica el fichero Dockerfile añadiendo las siguientes lineas de código. 
 
 ```dockerfile
 # Set time Europe/Madrid
@@ -358,6 +359,11 @@ ENTRYPOINT ["micromamba","run","-n","aspire","/opt/entrypoint.sh"]
 
 ## Automatización del repositorio
 
+El grupo Ciencia de datos para la investigación en servicios y políticas sanitarias recomienda el uso de repositorios de código para afrontar abordajes federados.
+Esta aproximación ayuda a fomentar el trabajo en paralelo y permite a terceros el seguimiento de cambios, el control de versiones, la transparencia en los códigos de análisis y el futuro mantenimiento.
+
+A continuación se muestra como aprovechar algunas caracteristicas que ofrece GitHub como las Acciones de GitHub, que nos permite empaquetar nuestro software de forma automática en cada lanzamiento, y poder referenciar el repositorio del proyecto en plataformas bajo el programa europeo OpenAIRE como Zenodo.
+
 Tareas:
 
 - [ ] [GitHub] Crear directorio `.github/workflows`
@@ -369,15 +375,17 @@ Tareas:
 
 Las Acciones de GitHub facilitan la automatización de tus flujos de trabajo de Software. 
 En esta plantilla se proporciona el código de una acción que se encarga de crear la imagen Docker de tu proyecto de forma automatizada usando ASPIRE.
-La acción se lanza de forma automática cuando se crea un nuevo lanzamiento (release) en el repositorio. 
-
-La acción crea la imagen Docker con nombre `<account>/<repo>:<tag>` de tu proyecto asignando la etiqueta correspondiente al lanzamiento del repositorio. Esta versión se asigna a la versión del pipeline de análisis.
 
 > [!NOTE]  
-> Aprende más sobre el [empaquetado con Acciones de GitHub](https://docs.github.com/es/actions/publishing-packages/about-packaging-with-github-actions).
+> Aprende más sobre [GitHub Actions](https://github.com/features/actions).
 
+> [!NOTE]  
+> Aprende más sobre [Administrar lanzamientos en un repositorio](https://docs.github.com/es/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
 
-`.github/workflows/build_image.yml`
+La acción se lanza de forma automática cuando se crea un nuevo lanzamiento (release) en el repositorio. En el fichero `.github/workflows/build_image.yml` se encuentra el flujo de trabajo que crea la imagen Docker con nombre `<account>/<repo>:<tag>` de tu proyecto asignando la etiqueta correspondiente al lanzamiento del repositorio. Esta versión se asigna a la versión del pipeline de análisis.
+
+Código de la acción de GitHub:
+
 <details>
 <summary>build_image.yml</summary>
 
@@ -426,10 +434,7 @@ jobs:
 </details>
 
 > [!NOTE]  
-> Aprende más sobre [GitHub Actions](https://github.com/features/actions).
-
-> [!NOTE]  
-> Aprende más sobre [Administrar lanzamientos en un repositorio](https://docs.github.com/es/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
+> Aprende más sobre el [empaquetado con Acciones de GitHub](https://docs.github.com/es/actions/publishing-packages/about-packaging-with-github-actions).
 
 ### Referenciar y citar contenido
 
@@ -439,20 +444,44 @@ Si quieres aprender como archivar tu repositorio en Zenodo o Figshare, visite [R
 
 ## Despliegue del pipeline de análisis
 
+
+
 Tareas:
 
-- [ ] Crear imagen de Docker de tu proyecto
-- [ ] Pull imagen de Docker
-- [ ] Run imagen Docker
+- [ ] [Opcional] Construir (Build) la imagen Docker
+- [ ] Descargar (Pull) imagen de Docker
+- [ ] Iniciar (Run) imagen Docker
 - [ ] [Opcional] Actualizar imagen Docker
-- [ ] Comprobar que la aplicación funciona (Visualizar aplicación (ASPIRE))
+- [ ] Visualizar aplicación (ASPIRE)
 
-### Descarga la imagen pipeline
-```console
-myuser@:~$ whoami
-foo
-```
+### [Opcional] Construir (Build) la imagen Docker
 
+### Descargar (Pull) imagen de Docker
+
+### Iniciar (Run) imagen Docker
+
+### [Opcional] Actualizar imagen Docker
+
+### [Opcional] Actualizar imagen Docker
+
+### Visualizar aplicación (ASPIRE)
+
+
+## Como usar ASPIRE
+
+Tareas:
+
+- [ ] Mapear ficheros de entrada
+- [ ] Ejecutar scripts de análisis
+- [ ] Obtener ficheros de salida (outputs)
+
+### Mapear ficheros de entrada
+
+### Ejecutar scripts de análisis
+
+### Obtener ficheros de salida (outputs)
+
+## Referencias
 
 
 > [!NOTE]  
@@ -469,23 +498,7 @@ foo
 
 > [!CAUTION]
 > Negative potential consequences of an action.
-
-
-## Como usar ASPIRE
-
-Tareas:
-
-- [ ] Mapear ficheros de entrada
-- [ ] Ejecutar scripts de análisis
-- [ ] Obtener ficheros de salida (outputs)
-
-### Mapear input de entrada
-
-### Ejecutar scripts de análisis
-
-### Obtener outputs
-
-### Referencias
+> 
 
 # How to deploy your analysis pipeline using ASPIRE
 
