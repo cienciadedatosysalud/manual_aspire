@@ -444,6 +444,13 @@ Si quieres aprender como archivar tu repositorio en Zenodo o Figshare, visite [R
 
 ## Despliegue del pipeline de análisis
 
+En este punto ya tienes creados todos los elementos para poder distribuir tu proyecto. Para poder hacer frente a los problemas típicos sobre la distribución y despliegue de software la opción escogida para desplegar nuestro proyecto será el uso de Docker.
+
+![issues](.github/img/issues.png)
+*Problemas típicos en despliegues*
+
+> [!NOTE]  
+> Aprende más sobre [Docker](https://www.docker.com/).
 
 
 Tareas:
@@ -454,23 +461,106 @@ Tareas:
 - [ ] [Opcional] Actualizar imagen Docker
 - [ ] Visualizar aplicación (ASPIRE)
 
+Para el ejemplo ilustrativo seguiremos la siguiente nomenclatura. Nomenclatura que debe ser cambiada en tu proyecto:
+
+> * Registro de imagenes Docker: `ghcr.io`
+> * Propietario del repositorio: `cienciadedatosysalud`
+> * Nombre de la imagen Docker: `myproject_image`
+> * Versión de los análisis (`pipeline_version`): 3.0.3
+> * Nombre del contenedor Docker: `myproject_container`
+> * etiqueta de la imagen Docker: `latest` 
+
+
 ### [Opcional] Construir (Build) la imagen Docker
 
+En caso de no utilizar un repositorio de código como GitHub o querer empaquetar en local tu proyecto  contruiremos la imagen de Docker de la siguiente manera:
+
+Nos situamos en el directorio donde se encuentra nuestra estructura de carpetas del proyecto y ejecutamos la siguiente instrucción.
+
+```bash
+docker build --build-arg pipeline_version=3.0.3 -t myproject_image .
+```
+
+Observa el log que muestra la instrucción para confirmar que todas las dependencias se han creado correctamente.
+
+> [!NOTE]  
+> Aprende más sobre [construir imagenes Docker](https://docs.docker.com/engine/reference/commandline/build/).
+
+
 ### Descargar (Pull) imagen de Docker
+En caso de que la imagen Docker de tu proyecto este hospedada en un registro utiliza la siguiente instrucción.
+
+```bash
+docker pull ghcr.io/cienciadedatosysalud/myproject_image:latest
+```
+
+> [!NOTE]  
+> Aprende más sobre [descargar imagenes Docker](https://docs.docker.com/engine/reference/commandline/pull/).
+
 
 ### Iniciar (Run) imagen Docker
 
-### [Opcional] Actualizar imagen Docker
+Una vez descargada o creada la imagen de Docker, ejecuta la siguiente instrucción para crear e iniciar el contenedor.
+
+```bash
+docker run -d -p 127.0.0.1:3000:3000 --name myproject_container myproject_image:latest
+```
+ 
+
+> [!WARNING]  
+> Es posible que el puerto 3000 esté ocupado en tu equipo. En tal caso, cambia la instrucción a un puerto disponible `-p 127.0.0.1:3500:3000` .
+
+> [!NOTE]  
+> Aprende más sobre [descargar imagenes Docker](https://docs.docker.com/engine/reference/commandline/pull/).
 
 ### [Opcional] Actualizar imagen Docker
+A lo largo del ciclo de vida del software es posible que nuestro código de análisis necesite arreglar algunos fallos. 
+Para sustituir un nuevo paquete de software por el antiguo realiza los siguientes pasos:
+
+- [ ] Parar el contenedor en caso de estar en funcionamiento:
+```bash
+docker stop myproject_container
+```
+- [ ] Borrar el contenedor:
+```bash
+docker rm myproject_container
+```
+> [!IMPORTANT]  
+> Al borrar el contenedor perderás todo el contenido del mismo.
+
+- [ ] Borrar imagen del proyecto antigua:
+```bash
+docker rmi myproject_image:latest
+```
+
+- [ ] Descargar la nueva imagen del repositorio de código:
+```bash
+docker pull ghcr.io/cienciadedatosysalud/myproject_image:latest
+```
+
+- [ ] Iniciar el nuevo contenedor
+```bash
+docker run -d -p 127.0.0.1:3000:3000 --name myproject_container ghcr.io/cienciadedatosysalud/myproject_image:latest
+```
+
+> [!NOTE]  
+> Aprende más sobre [borrar imagenes Docker](https://docs.docker.com/engine/reference/commandline/rmi/).
+
+> [!NOTE]  
+> Aprende más sobre [borrar contenedores Docker](https://docs.docker.com/engine/reference/commandline/rm/).
+
+> [!NOTE]  
+> Aprende más sobre [parar contenedores Docker](https://docs.docker.com/engine/reference/commandline/stop/).
 
 ### Visualizar aplicación (ASPIRE)
+
+Abre tu navegador favorito y escribe la dirección http://localhost:3000/ . 
+Si todo ha funcionado correctamente deberías de estar viendo la interfaz de ASPIRE.
 
 
 ## Como usar ASPIRE
 
 Tareas:
-
 - [ ] Mapear ficheros de entrada
 - [ ] Ejecutar scripts de análisis
 - [ ] Obtener ficheros de salida (outputs)
@@ -484,8 +574,6 @@ Tareas:
 ## Referencias
 
 
-> [!NOTE]  
-> Concepto release.
 
 > [!TIP]
 > Puedes copiar la estructura de este repositorio y añadir la salida obtenida de la Common Data Model Builder.
