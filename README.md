@@ -64,7 +64,7 @@ Una vez formulada la pregunta de investigación, completa las siguientes tareas 
 Tareas:
 
 - [ ] 1. Crear el modelo común de datos usando la librería [cdmb](https://github.com/cienciadedatosysalud/cdmb).
-- [ ] 2. Implementar los scripts de análisis en R o Python en la estructura de trabaja que se obtiene del [cdmb](https://github.com/cienciadedatosysalud/cdmb).
+- [ ] 2. Implementar los scripts de análisis en R o Python en la estructura de trabajo que se obtiene del [cdmb](https://github.com/cienciadedatosysalud/cdmb).
 - [ ] 3. Realizar el testeo adecuado de los scripts con dato sintético.
 - [ ] 4. Seguir este tutorial :blush:
 
@@ -102,7 +102,7 @@ Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial
 
 ## Estructura del repositorio de código
 
-Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura de proyecto estandarizada. En concreto, este tutorial se basa en la integración de la estructura de proyecto del modelo común de datos generada a partir de la utilización de la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudaran a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
+Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura de proyecto estandarizada. En concreto, este tutorial se basa en la integración de la estructura de proyecto del modelo común de datos generada a partir de la utilización de la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudarán a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
 
 Tareas:
 - [ ] Añadir el fichero `env_project.yaml`
@@ -261,7 +261,7 @@ Tareas:
 ASPIRE permite cambiar el logo que se muestra en la landing page de la aplicación. Sigue los siguientes pasos para realizarlo de forma correcta:
 
 1- Añade tu logo a la estructura de carpetas
-2- Asegurate que el nombre y formato del fichero cumple con "main_logo.png".
+2- Asegúrate que el nombre y formato del fichero cumple con "main_logo.png".
 3- Modifica el fichero Dockerfile añadiendo la instrucción que te permite sustituir el logo por defecto por tu logo.
 
 ```dockerfile
