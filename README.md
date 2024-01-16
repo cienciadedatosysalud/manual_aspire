@@ -574,20 +574,6 @@ Tareas:
 ## Referencias
 
 
-
-> [!TIP]
-> Puedes copiar la estructura de este repositorio y añadir la salida obtenida de la Common Data Model Builder.
-
-> [!IMPORTANT]  
-> Crucial information necessary for users to succeed.
-
-> [!WARNING]  
-> Critical content demanding immediate user attention due to potential risks.
-
-> [!CAUTION]
-> Negative potential consequences of an action.
-> 
-
 # How to deploy your analysis pipeline using ASPIRE
 
 [Code repository structure](#code-repository-structure) • [Dependency management](#dependency-management) • [Customization](#customization) • [Deployment](#deployment-of-the-analysis-pipeline) • [How to use ASPIRE](#how-to-use-aspire)
