@@ -261,8 +261,10 @@ Tareas:
 
 ASPIRE permite cambiar el logo que se muestra en la landing page de la aplicación. Sigue los siguientes pasos para realizarlo de forma correcta:
 
-1- Añade tu logo a la estructura de carpetas
+1- Añade tu logo a la estructura de carpetas.
+
 2- Asegúrate que el nombre y formato del fichero cumple con "main_logo.png".
+
 3- Modifica el fichero Dockerfile añadiendo la instrucción que te permite sustituir el logo por defecto por tu logo.
 
 ```dockerfile
