@@ -620,15 +620,7 @@ Si los análisis se han ejecutado correctamente es momento de descargar los fich
 
 # How to deploy your analysis pipeline using ASPIRE
 
-[Code repository structure](#code-repository-structure) • [Dependency management](#dependency-management) • [Customization](#customization) • [Deployment](#deployment-of-the-analysis-pipeline) • [How to use ASPIRE](#how-to-use-aspire)
 
-## Code repository structure
-
-## Dependency management
-
-## Customization
-
-## Deployment of the analysis pipeline
 
 ## How to use ASPIRE
 
