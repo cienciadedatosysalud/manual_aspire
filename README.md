@@ -339,7 +339,8 @@ RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
 #########################################################
 COPY --chown=$MAMBA_USER:$MAMBA_USER . /home/$MAMBA_USER/projects/your_project
 
-# Cambia el nombre de carpeta 'your_project' por un nombre de carpeta válido que haga referencia a tu proyecto.
+# Cambia el nombre de carpeta 'your_project' por un nombre de carpeta válido que
+# haga referencia a tu proyecto.
 
 ################################
 # Personalización: Añadir logo #
