@@ -3,26 +3,7 @@ channels:
  - conda-forge
 dependencies:
 #- r-base=4.2.3
-#- r-knitr=1.42
-#- r-rmarkdown=2.23
-#- quarto=1.2.475
-#- r-hmisc=5.1_0
-- r-keras=2.11.1
-- r-mgcv=1.9_0
-- r-logger=0.2.2
-- r-tidyverse=2.0.0
-- r-survival=3.5_5
-- r-survminer=0.4.9
-- r-timedate=4022.108
-- r-stringr=1.5.0
-- r-igraph
-- conda
-- numpy==1.23.5
-#- matplotlib==3.7.2
-- tabulate==0.9.0
-- lifelines==0.27.7
-- scikit-learn==1.2.2
-- pip=23.0.1 
-- pip:
-  - tensorflow
-#- tensorflow==2.12.0
+#- numpy==1.23.5
+#- pip=23.0.1 
+#- pip:
+  #- tensorflow
