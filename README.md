@@ -562,6 +562,14 @@ Si todo ha funcionado correctamente deberías de estar viendo la interfaz de ASP
 
 ## Como usar ASPIRE
 
+Abre tu navegador en la dirección adecuada y visualizarás una web parecida a la siguiente imagen.
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/home_esp.png" width="80%">
+</p>
+
+Para ejecutar tu pipeline de análisis de forma correcta realiza las siguientes tareas:
+
 Tareas:
 - [ ] Mapear ficheros de entrada
 - [ ] Ejecutar scripts de análisis
@@ -569,9 +577,43 @@ Tareas:
 
 ### Mapear ficheros de entrada
 
+Situate en la pestaña `MAPEAR DATOS` y completa los siguientes pasos:
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/map_esp.png" width="80%">
+</p>
+
+1. Selecciona el proyecto en el que quieres participar
+1. Selecciona los ficheros de entrada adecuados
+1. Pulsa el botón `MAPEE Y COMPRUEBE SUS DATOS`
+
+
 ### Ejecutar scripts de análisis
+Si el mapeo se ha realizado correctamente es momento de ejecutar tus análisis. Situate en la pestaña `EJECUTAR ANÁLISIS` y completa los siguientes pasos:
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/analysis_esp.png" width="80%">
+</p>
+
+1. Selecciona el proyecto en el que quieres participar
+1. Selecciona el script de código que quieres ejecutar
+1. Pulsa el botón `EJECUTAR ANÁLISIS`
+
 
 ### Obtener ficheros de salida (outputs)
+
+Si los análisis se han ejecutado correctamente es momento de descargar los ficheros de salida. Situate en la pestaña `RESULTADOS` y completa los siguietes pasos:
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/outputs_esp.png" width="80%">
+</p>
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/download_esp.png" width="80%">
+</p>
+
+1. Selecciona el proyecto del que quieres recuperar los ficheros de salida
+1. Descarga los ficheros necesarios o descarga todos
 
 ## Referencias
 
