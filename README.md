@@ -365,7 +365,7 @@ ENTRYPOINT ["micromamba","run","-n","aspire","/opt/entrypoint.sh"]
 El grupo Ciencia de datos para la investigación en servicios y políticas sanitarias recomienda el uso de repositorios de código para afrontar abordajes federados.
 Esta aproximación ayuda a fomentar el trabajo en paralelo y permite a terceros el seguimiento de cambios, el control de versiones, la transparencia en los códigos de análisis y el futuro mantenimiento.
 
-A continuación se muestra como aprovechar algunas caracteristicas que ofrece GitHub como las Acciones de GitHub, que nos permite empaquetar nuestro software de forma automática en cada lanzamiento, y poder referenciar el repositorio del proyecto en plataformas bajo el programa europeo OpenAIRE como Zenodo.
+A continuación se muestra como aprovechar algunas caracteristicas que ofrece GitHub, como las Acciones de GitHub, que nos permite empaquetar nuestro software de forma automática en cada lanzamiento y poder referenciar el repositorio del proyecto en plataformas bajo el programa europeo OpenAIRE como Zenodo.
 
 Tareas:
 
