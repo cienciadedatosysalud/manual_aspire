@@ -620,8 +620,102 @@ Si los análisis se han ejecutado correctamente es momento de descargar los fich
 
 # How to deploy your analysis pipeline using ASPIRE
 
+Welcome to the tutorial to learn how to deploy the analyses of your research project configured using the Common Data Model Builder ('cdmb') library using ASPIRE (Analytic Software Pipeline Interface for Reproducible Execution). 
 
+First, let's take a look at the working methodology followed in a federated architecture. 
+
+```mermaid
+---
+title: Workflow in a federated architecture
+---
+flowchart LR
+   question["Research\n Question"]
+   cdm["Common\n Data Model"]
+   synthetic["Synthetic\n dataset"]
+   quality["Quality\nAnalysis\n(scripts)"]
+   analysis["Analysis\n(scripts)"]
+   usecase["Use Case\n Deployment"]
+   outputs["Outputs\n recollection\n & synthesis"]
+   deliverable["Use Case\n Deliverable\n production"]
+   question --> cdm
+   cdm -- Data hubs / \n Domain Experts --> synthetic
+   synthetic -- CDM  / \n Availability Survey --> cdm
+   synthetic --> quality
+   quality -- IT + Epi methods +\n Domain Experts --> analysis
+   analysis --> quality
+   analysis --> usecase
+   usecase --> outputs
+   outputs --> deliverable
+
+```
+
+```mermaid
+journey
+    title Workflow in a federated architecture
+    section Common Data Model Builder (cdmb)
+      Common Data Model:20:cdmb
+      Synthetic dataset:20: cdmb
+      Quality Analysis (scripts): 20: cdmb
+      Analysis (scripts): 20: cdmb, aspire
+    section Aspire
+      Use Case Deployment: 20 : aspire
+      Outputs recollection & synthesis: 20 : aspire
+      Use Case Deliverable production: 20 : aspire
+```
+
+More information on the tools used:
+<p align="left">
+<a href="https://github.com/cienciadedatosysalud/aspire"><img width="375" src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/pin/?username=cienciadedatosysalud&repo=ASPIRE&theme=react&bg_color=1F222E&title_color=F85D7F&icon_color=F8D866&hide_border=true&show_icons=false" alt="aspire"></a>
+<a href="https://github.com/cienciadedatosysalud/cdmb"><img width="430" src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/pin/?username=cienciadedatosysalud&repo=cdmb&theme=react&bg_color=1F222E&title_color=F85D7F&icon_color=F8D866&hide_border=true&show_icons=false" alt="cdmb"></a>
+</p>
+
+Once the research question has been formulated, complete the following tasks before beginning the tutorial:
+
+Tasks:
+
+- [ ] 1. Create the common data model using the [cdmb](https://github.com/cienciadedatosysalud/cdmb) library.
+- [ ] 2. Implement the analysis scripts in R or Python in the work structure obtained from the [cdmb](https://github.com/cienciadedatosysalud/cdmb).
+- [ ] 3. Perform proper testing of scripts with synthetic data.
+- [ ] 4. Follow this tutorial :blush:
+
+# Tutorial
+
+ [Project structure](#project-structure) • [Dependency management](#dependency-management) • [Customization](#customization) • [Repository automation](#repository-automation) • [Deployment](#deployment-of-the-analysis-pipeline) • [How to use ASPIRE](#how-to-use-aspire)
+
+```mermaid
+ timeline
+    title Deployment and execution of your project
+    Project structure : Add work structure obtained from the cdmb.
+                           : Add env_project.yaml file
+                           : Add Dockerfile
+                           : Add .dockerignore file
+    Dependency management : Modify env_project.yaml file
+                            : Modify Dockerfile
+    Customization : Add logo
+                    : Set time zone in Docker image
+    Repository automation : [GitHub] Add .github/workflows directory
+                                   : [GitHub] Add GitHub action "build_image.yml".
+                                   : [GitHub Optional] Repository referencing and citation
+                                   : [GitHub] Create release
+                                   : Create Docker image of the project
+    Deployment : Build Docker image
+               : Pull Docker image
+               : Run Docker image
+               : [Opcional] Update Docker image
+               : Display application (ASPIRE)
+    Using ASPIRE : Map input files
+                : Run analysis
+                : Get output files
+```
+
+## Project structure
+
+## Dependency management
+
+## Customization
+
+## Repository automation
+
+## Deployment of the analysis pipeline
 
 ## How to use ASPIRE
-
-
