@@ -471,12 +471,12 @@ Para el ejemplo ilustrativo seguiremos la siguiente nomenclatura. Nomenclatura q
 > * Nombre de la imagen Docker: `myproject_image`
 > * Versión de los análisis (`pipeline_version`): 3.0.3
 > * Nombre del contenedor Docker: `myproject_container`
-> * etiqueta de la imagen Docker: `latest` 
+> * Etiqueta de la imagen Docker: `latest` 
 
 
 ### [Opcional] Construir (Build) la imagen Docker
 
-En caso de no utilizar un repositorio de código como GitHub o querer empaquetar en local tu proyecto  contruiremos la imagen de Docker de la siguiente manera:
+En caso de no utilizar un repositorio de código como GitHub o querer empaquetar en local tu proyecto contruiremos la imagen de Docker de la siguiente manera:
 
 Nos situamos en el directorio donde se encuentra nuestra estructura de carpetas del proyecto y ejecutamos la siguiente instrucción.
 
@@ -508,13 +508,12 @@ Una vez descargada o creada la imagen de Docker, ejecuta la siguiente instrucci�
 ```bash
 docker run -d -p 127.0.0.1:3000:3000 --name myproject_container myproject_image:latest
 ```
- 
 
 > [!WARNING]  
 > Es posible que el puerto 3000 esté ocupado en tu equipo. En tal caso, cambia la instrucción a un puerto disponible `-p 127.0.0.1:3500:3000` .
 
 > [!NOTE]  
-> Aprende más sobre [descargar imagenes Docker](https://docs.docker.com/engine/reference/commandline/pull/).
+> Aprende más sobre [ejecutar imagenes Docker](https://docs.docker.com/engine/reference/commandline/container_run/).
 
 ### [Opcional] Actualizar imagen Docker
 A lo largo del ciclo de vida del software es posible que nuestro código de análisis necesite arreglar algunos fallos. 
