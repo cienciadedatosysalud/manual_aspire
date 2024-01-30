@@ -138,7 +138,7 @@ La imagen base de ASPIRE (imagen Docker) tiene instalado por defecto el siguient
 <table>
 <tr><td>
 
-| Software  | librería/paquete |
+| Software  | Librería/paquete |
 | ------------- | ------------- |
 | Python  | fastapi  |
 | Python  | chardet  |
@@ -157,7 +157,7 @@ La imagen base de ASPIRE (imagen Docker) tiene instalado por defecto el siguient
 
 </td><td>
 
-| Software  | librería/paquete |
+| Software  | Librería/paquete |
 | ------------- | ------------- |
 | R  | base  |
 | R  | knitr  |
@@ -710,7 +710,89 @@ Tasks:
 
 ## Project structure
 
+In order to package our analysis pipeline it is necessary to start from a standardized project structure. Specifically, this tutorial is based on the integration of the common data model project structure generated from the use of the Common Data Model Builder (cdmb) library and auxiliary elements that will help us to install the necessary dependencies of our analysis code and packaging using ASPIRE.
+
+Tasks:
+- [ ] Add `env_project.yaml` file.
+- [ ] Add `Dockerfile` file
+- [ ] Add `.dockerignore` file
+
+Obtaining a project structure as follows:
+
+![github repo structure](.github/img/github_repository.png)
+
+> [!TIP]
+> You can use this repository as a template for deploying your analysis pipeline. For more information, visit [Creating a repository from a template](https://docs.github.com/es/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
+
+> [!IMPORTANT]  
+> Check thoroughly your `.gitignore` and `.dockerignore` files, make sure that any sensitive data used during development of the analyses is not published in the repository or in the Docker image.
+
 ## Dependency management
+
+In this section we work on the elements in charge of installing the dependencies (e.g., packages and/or libraries) required by your analyses.
+
+ASPIRE uses [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) to manage libraries and packages dependencies. Micromamba is a tiny version of the mamba package manager, a package and environment manager for Python and other languages.
+
+The APIRE base image (Docker image) has the following set of technologies/sofware installed by default (for more info, ).
+
+- Python
+- R
+- Quarto
+- Libraries/packages:
+<table>
+<tr><td>
+
+| Software  | Library/package |
+| ------------- | ------------- |
+| Python  | fastapi  |
+| Python  | chardet  |
+| Python  | starlette  |
+| Python  | urllib3  |
+| Python  | uvicorn  |
+| Python  | ydata-profiling  |
+| Python  | python-multipart  |
+| Python  | pandas  |
+| Python  | duckdb  |
+| &nbsp;  |   |
+| &nbsp;  |   |
+| &nbsp;  |   |
+| &nbsp;  |   |
+| &nbsp;  |   |
+
+</td><td>
+
+| Software  | Library/package |
+| ------------- | ------------- |
+| R  | base  |
+| R  | knitr  |
+| R  | rmarkdown  |
+| R  | urllib3  |
+| R  | uvicorn  |
+| R  | logger  |
+| R  | kableextra |
+| R  | dbi  |
+| R  | dplyr  |
+| R  | purrr  |
+| R  | remotes  |
+| R  | rjson  |
+| R  | hmisc  |
+| R  | duckdb  |
+
+</td>
+
+</tr> </table>
+
+All the necessary dependencies in ASPIRE are installed in an environment called **aspire**.
+
+Una vez completado el paso anterior es necesario actualizar el entorno **aspire** y añadir las dependencias restantes para poder ejecutar nuestros scripts de análisis. 
+
+Tareas:
+
+- [ ] Modificar el fichero env_project.yaml
+- [ ] Modificar el fichero Dockerfile 
+
+> [!TIP]
+> Apunta durante el desarrollo del código de análisis todas las librerías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código declaradas dependencias que no se utilizan.
 
 ## Customization
 
