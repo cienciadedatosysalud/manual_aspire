@@ -855,6 +855,8 @@ RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
 
 ## Customization
 
+Task:
+
 ## Repository automation
 
 ## Deployment of the analysis pipeline
