@@ -784,15 +784,74 @@ The APIRE base image (Docker image) has the following set of technologies/sofwar
 
 All the necessary dependencies in ASPIRE are installed in an environment called **aspire**.
 
-Una vez completado el paso anterior es necesario actualizar el entorno **aspire** y añadir las dependencias restantes para poder ejecutar nuestros scripts de análisis. 
+Once the previous step is completed, it is necessary to update the **aspire** environment and add the remaining dependencies to be able to run our analysis scripts.
 
-Tareas:
+Tasks:
 
-- [ ] Modificar el fichero env_project.yaml
-- [ ] Modificar el fichero Dockerfile 
+- [ ] Modify env_project.yaml file
+- [ ] Modify the Dockerfile 
 
 > [!TIP]
-> Apunta durante el desarrollo del código de análisis todas las librerías/paquetes que has necesitado con sus correspondientes versiones y evita tener en el código declaradas dependencias que no se utilizan.
+> Note during the development of the analysis code all the libraries/packages you have needed with their corresponding versions and avoid having unused dependencies declared in the code.
+
+### Modify env_project.yaml file
+
+The **env_project.yaml** is a file that follows the Conda YAML specifications.
+
+Conda YAML files contain all the information needed to create and reproduce a Conda environment, such as the name, channels, dependencies and all environment variables.
+
+Conda YAML files have a simple and readable structure, where each element is separated by a colon (:) or hyphens (-).
+
+> [!NOTE]  
+> A channel is an independent and isolated repository structure used to more easily classify and manage a package server. (more [information](https://mamba.readthedocs.io/en/latest/advanced_usage/more_concepts.html))
+
+Change the example provided by the libraries needed for the analysis and available in the declared channels. For example, the following YAML file updates the environment named aspire using the channel [conda-forge](https://conda-forge.org/) with pandas version 2.1.0, R package plotly version 4.10.2, etc.
+
+``` yaml
+name: aspire
+channels:
+ - conda-forge
+dependencies:
+- r-sf=1.0_14
+- r-sjmisc=2.8.9
+- r-gt=0.9.0
+- r-cowplot=1.1.1
+- r-ggalluvial=0.12.5
+- r-ggrepel=0.9.3
+- r-ggplot2=3.4.2
+- r-plotly=4.10.2
+- r-htmlwidgets=1.6.2
+- pip:
+  - ydata-profiling==4.6.0
+- pandas==2.1.0
+```
+
+### Modify the Dockerfile 
+
+Occasionally, it is possible that a package/library is not found in any of the channels used by Micromamba and must be installed manually by specifying it in the Dockerfile.
+
+To do this, modify the Dockerfile and add the code snippet to install the library in the aspire environment.
+
+```
+micromamba run -n aspire Rscript -e "remotes::install_github('gadenbuie/epoxy')"
+```
+
+In this example, the R epoxy library is installed from GitHub using the *remotes* library. Now the Dockerfile should look like this:
+
+```dockerfile
+# Installing dependencies
+RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
+    && micromamba run -n aspire Rscript -e "remotes::install_github('gadenbuie/epoxy')" \ 
+    && micromamba clean --all --yes \
+    && rm -rf /opt/conda/conda-meta /tmp/env_project.yaml
+```
+
+> [!NOTE]  
+> An environment is a set of packages and dependencies that are installed in a specific location and can be enabled or disabled as needed. (more [information](https://mamba.readthedocs.io/en/latest/user_guide/concepts.html))
+
+> [!CAUTION]
+> Micromamba may modify the versioning of some libraries from what is specified to ensure compatibility. Please check locally that everything works correctly (Build image -> Deploy -> Run analysis pipeline).
+
 
 ## Customization
 
