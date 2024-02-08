@@ -374,13 +374,13 @@ Tareas:
 - [ ] [GitHub] Aprende a referenciar y citar contenido del repositorio
 - [ ] [GitHub] Crea un nuevo lanzamiento (release)
 
-### GitHub Actions
+### Acciones de GitHub
 
 Las Acciones de GitHub facilitan la automatización de tus flujos de trabajo de Software. 
 En esta plantilla se proporciona el código de una acción que se encarga de crear la imagen Docker de tu proyecto de forma automatizada usando ASPIRE.
 
 > [!NOTE]  
-> Aprende más sobre [GitHub Actions](https://github.com/features/actions).
+> Aprende más sobre [Acciones de GitHub](https://github.com/features/actions).
 
 > [!NOTE]  
 > Aprende más sobre [Administrar lanzamientos en un repositorio](https://docs.github.com/es/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
@@ -857,8 +857,363 @@ RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
 
 Task:
 
+- [ ] [Optional] add main_logo.png file to the working folder structure
+- [ ] [Optional] Modify Dockerfile and set the time zone data.
+
+### Add logo
+
+APIRE allows you to change the logo displayed on the app's landing page. Follow the steps below to do it correctly:
+
+1- Add your logo to the folder structure.
+
+2- Make sure the file name and format complies with "main_logo.png".
+
+3- Modify the Dockerfile by adding the instruction that allows you to replace the default logo with your logo.
+
+```dockerfile
+COPY --chown=$MAMBA_USER:$MAMBA_USER main_logo.png /temp/main_logo.png
+RUN cp /temp/main_logo.png $(find front -name main_logo**)
+```
+
+> [!IMPORTANT]  
+> The logo must comply with the required name and format: **main_logo.png**.
+
+### Set time zone in Docker image
+
+If you want the application to display the time according to your location and match the time of creation of the output files with your time zone, modify the Dockerfile by adding the following lines of code. 
+
+```dockerfile
+# Set time Europe/Madrid
+
+RUN micromamba -n aspire install tzdata -c conda-forge && micromamba clean --all --yes \
+    && rm -rf /opt/conda/conda-meta
+ENV TZ=Europe/Madrid
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN micromamba run -n aspire date
+```
+
+
+<details>
+
+<summary>Base Dockerfile file</summary>
+
+``` dockerfile
+FROM ghcr.io/cienciadedatosysalud/aspire:latest
+ARG pipeline_version="Non-versioned"
+ENV PIPELINE_VERSION=$pipeline_version
+
+#########################################################
+# Dependency management: Installing system libraries #
+#########################################################
+
+USER root
+RUN apt update && apt install -y --no-install-recommends \
+  && apt install -y xdg-utils \
+  && rm -rf /var/lib/apt/lists/*
+
+#############################################################
+# Customization: Set time zone within the container         #
+#############################################################
+
+# Set time Europe/Madrid
+RUN micromamba -n aspire install tzdata -c conda-forge && micromamba clean --all --yes \
+    && rm -rf /opt/conda/conda-meta
+ENV TZ=Europe/Madrid
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN micromamba run -n aspire date
+
+
+#############################################################
+# Dependency management: Installing declared dependencies   #
+#############################################################
+
+USER $MAMBA_USER
+
+COPY --chown=$MAMBA_USER:$MAMBA_USER env_project.yaml /tmp/env_project.yaml
+
+# Installing dependencies
+RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
+    && micromamba clean --all --yes \
+    && rm -rf /opt/conda/conda-meta /tmp/env_project.yaml
+
+
+#########################################################
+# Copy the folder structure to the appropriate path     #
+#########################################################
+COPY --chown=$MAMBA_USER:$MAMBA_USER . /home/$MAMBA_USER/projects/your_project
+
+# Change the folder name 'your_project' to a valid folder name
+# that refers to your project.
+
+################################
+# Customization: Add logo #
+################################
+COPY --chown=$MAMBA_USER:$MAMBA_USER main_logo.png /temp/main_logo.png
+RUN cp /temp/main_logo.png $(find front -name main_logo**)
+
+ENV APP_PORT=3000
+ENV APP_HOST=0.0.0.0
+EXPOSE 3000
+
+WORKDIR /home/$MAMBA_USER
+
+ENTRYPOINT ["micromamba","run","-n","aspire","/opt/entrypoint.sh"]
+```
+
+</details>
+
 ## Repository automation
+
+The Data Science for Health Services and Policy Research group recommends the use of code repositories to address federated approaches.
+This approach helps to encourage parallel work and allows third parties to track changes, version control, transparency in code analysis and future maintenance.
+
+The following shows how to take advantage of some features offered by GitHub, such as GitHub Actions, which allows us to package our software automatically in each release and to reference the project repository in platforms under the European OpenAIRE program such as Zenodo.
+
+Tasks:
+
+- [ ] [GitHub] Create directory `.github/workflows`.
+- [ ] [GitHub] Create GitHub Action `build_image.yml`.
+- [ ] [GitHub] Learn how to reference and cite repository content
+- [ ] [GitHub] Create a new release
+
+### GitHub Actions
+
+GitHub Actions make it easy to automate your Software workflows. 
+This template provides the code for an action that takes care of creating the Docker image of your project in an automated way using ASPIRE.
+
+> [!NOTE]  
+> Learn more about [GitHub Actions](https://github.com/features/actions).
+
+> [!NOTE]  
+> Learn more about [Managing releases in a repository](https://docs.github.com/es/repositories/releasing-projects-on-github/managing-releases-in-a-repository).
+
+The action is triggered automatically when a new release is created in the repository. In the `.github/workflows/build_image.yml` file you can find the workflow that creates the Docker image named `<account>/<repo>:<tag>` of your project by assigning the tag corresponding to the repository release. This version is mapped to the version of the analysis pipeline.
+
+GitHub Action code:
+
+<details>
+<summary>build_image.yml</summary>
+
+``` yaml
+name: Docker Image CI
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+  workflow_dispatch:
+env:
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+jobs:
+  compile:
+    name: Build and push the image
+    runs-on: ubuntu-latest
+    permissions:
+        contents: read
+        packages: write
+        id-token: write # needed for signing the images with GitHub OIDC Token
+    steps:
+      - name: Get tag name from GITHUB_REF
+        run: echo "TAG_NAME=${{ github.ref == '' && 'nonversioned' || github.ref#refs/tags/ }}" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/${{ env.IMAGE_NAME }}:${{env.TAG_NAME}},ghcr.io/${{ env.IMAGE_NAME }}:latest
+          file: ./Dockerfile
+          build-args: |
+            pipeline_version=${{ env.TAG_NAME }}
+```
+
+</details>
+
+> [!NOTE]  
+> Learn more about [packaging with GitHub Actions](https://docs.github.com/es/actions/publishing-packages/about-packaging-with-github-actions).
+
+### Referencing and citing content
+
+GitHub allows you to use third-party tools to cite and reference content. 
+If you want to learn how to archive your repository on Zenodo or Figshare, visit [Referencing and citing content].(https://docs.github.com/es/repositories/archiving-a-github-repository/referencing-and-citing-content).
 
 ## Deployment of the analysis pipeline
 
+At this point you have already created all the elements to be able to distribute your project. To be able to face the typical problems about software distribution and deployment, the option chosen to deploy our project will be the use of Docker.
+
+![issues](.github/img/issues.png)
+*Typical problems in deployments*
+
+> [!NOTE]  
+> Learn more about [Docker](https://www.docker.com/).
+
+Tasks:
+
+- [ ] [Optional] Build Docker image
+- [ ] Pull Docker image
+- [ ] Run Docker image
+- [ ] [Optional] Update Docker image
+- [ ] Display the app (ASPIRE)
+
+For the illustrative example we will follow the following nomenclature. Nomenclature that must be changed in your project:
+
+> * Docker image registry: `ghcr.io`
+> * Repository owner: `cienciadedatosysalud`
+> * Docker image name: `myproject_image`
+> * Version of the analysis (`pipeline_version`): 3.0.3
+> * Docker container name: `myproject_container`
+> * Docker image tag: `latest` 
+
+
+### [Optional] Build Docker image
+
+In case you don't use a code repository like GitHub or want to package your project locally we will build the Docker image as follows:
+
+Once in the correct path where the folder structure of the project is located, the following comando is executed.
+
+```bash
+docker build --build-arg pipeline_version=3.0.3 -t myproject_image .
+```
+
+Observe the log displayed by the command to confirm that all dependencies have been created correctly.
+
+> [!NOTE]  
+> Learn more about [building Docker images](https://docs.docker.com/engine/reference/commandline/build/).
+
+
+### Pull Docker image
+In case the Docker image of your project is hosted in a registry use the following command:
+
+```bash
+docker pull ghcr.io/cienciadedatosysalud/myproject_image:latest
+```
+
+> [!NOTE]  
+> Learn morea about [pulling Docker images](https://docs.docker.com/engine/reference/commandline/pull/).
+
+
+### Run Docker image
+
+Once the Docker image is downloaded or created, run the following command to create and start the container.
+
+```bash
+docker run -d -p 127.0.0.1:3000:3000 --name myproject_container myproject_image:latest
+```
+
+> [!WARNING]  
+> It is possible that port 3000 is busy on your computer. In this case, change the instruction to an available port `-p 127.0.0.1:3500:3000`.
+
+> [!NOTE]  
+> Learn more about [run Docker images](https://docs.docker.com/engine/reference/commandline/container_run/).
+
+### [Optional] Update Docker image
+
+Throughout the software life cycle it is possible that our analysis code may need to fix some bugs. 
+To replace an old Software package with a new one perform the following steps:
+
+- [ ] Stop the container in case of operation:
+```bash
+docker stop myproject_container
+```
+- [ ] Delete the container:
+```bash
+docker rm myproject_container
+```
+> [!IMPORTANT]  
+> By removing the container you will lose all the contents of the container.
+
+- [ ] Remove old Docker image:
+```bash
+docker rmi myproject_image:latest
+```
+
+- [ ] Download the new project image from the registry:
+```bash
+docker pull ghcr.io/cienciadedatosysalud/myproject_image:latest
+```
+
+- [ ] Run the new container
+```bash
+docker run -d -p 127.0.0.1:3000:3000 --name myproject_container ghcr.io/cienciadedatosysalud/myproject_image:latest
+```
+
+> [!NOTE]  
+> Learn more about [removing Docker images](https://docs.docker.com/engine/reference/commandline/rmi/).
+
+> [!NOTE]  
+> Learn more about [removing Docker containers](https://docs.docker.com/engine/reference/commandline/rm/).
+
+> [!NOTE]  
+> Learn more about [stop Docker containers](https://docs.docker.com/engine/reference/commandline/stop/).
+
+### Display the app (ASPIRE)
+
+Open your favorite browser and type the address http://localhost:3000/ . 
+If everything worked correctly you should be seeing the ASPIRE interface.
+
 ## How to use ASPIRE
+
+Open your browser to the appropriate url and you will see a web page similar to the following image.
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/home_esp.png" width="80%">
+</p>
+
+To run your analysis pipeline correctly perform the following tasks:
+
+Task:
+- [ ] Map input files
+- [ ] Run analysis scripts
+- [ ] Obtain output files
+
+### Map input files
+
+Go to the `MAP DATA` tab and complete the following steps:
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/map_en.png" width="80%">
+</p>
+
+1. Select the project in which you want to participate
+1. Select the appropriate input files
+1. Click on the button `MAP AND CHECK YOUR DATA`.
+
+
+### Run analysis scripts
+
+If the mapping has been done correctly it is time to run your analysis. Go to the `RUN ANALYSIS` tab and complete the following steps:
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/analysis_en.png" width="80%">
+</p>
+
+1. Select the project in which you want to participate
+1. Select the code script you want to execute
+1. Click on the button `RUN ANALYSIS`.
+
+
+### Obtain output files
+
+If the analyses have been executed correctly, it is time to download the output files. Go to the `RESULTS` tab and complete the following steps:
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/outputs_en.png" width="80%">
+</p>
+
+<p align="center">  
+<img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/download_en.png" width="80%">
+</p>
+
+1. Select the project you want to retrieve the output files from
+1. Download the necessary files or download all of them
+
+## References
