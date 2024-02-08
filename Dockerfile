@@ -38,14 +38,14 @@ RUN micromamba install -y -n aspire -f /tmp/env_project.yaml \
 
 
 #########################################################
-# Copy the folder structure to the appropriate path  #
+# Copy the folder structure to the appropriate path     #
 #########################################################
 COPY --chown=$MAMBA_USER:$MAMBA_USER . /home/$MAMBA_USER/projects/your_project
 
 # Change the folder name 'your_project' to a valid folder name that refers to your project.
 
 ################################
-# Customization: Add logo #
+# Customization: Add logo      #
 ################################
 COPY --chown=$MAMBA_USER:$MAMBA_USER main_logo.png /temp/main_logo.png
 RUN cp /temp/main_logo.png $(find front -name main_logo**)
