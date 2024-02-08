@@ -1092,7 +1092,7 @@ For the illustrative example we will follow the following nomenclature. Nomencla
 
 In case you don't use a code repository like GitHub or want to package your project locally we will build the Docker image as follows:
 
-Once in the correct path where the folder structure of the project is located, the following comando is executed.
+Once in the correct path where the folder structure of the project is located, the following command is executed.
 
 ```bash
 docker build --build-arg pipeline_version=3.0.3 -t myproject_image .
