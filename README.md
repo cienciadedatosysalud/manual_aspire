@@ -1058,7 +1058,7 @@ jobs:
 ### Referencing and citing content
 
 GitHub allows you to use third-party tools to cite and reference content. 
-If you want to learn how to archive your repository on Zenodo or Figshare, visit [Referencing and citing content].(https://docs.github.com/es/repositories/archiving-a-github-repository/referencing-and-citing-content).
+If you want to learn how to archive your repository on Zenodo or Figshare, visit [Referencing and citing content](https://docs.github.com/es/repositories/archiving-a-github-repository/referencing-and-citing-content).
 
 ## Deployment of the analysis pipeline
 
