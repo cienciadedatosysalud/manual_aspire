@@ -577,7 +577,7 @@ Tareas:
 
 ### Mapear ficheros de entrada
 
-Situate en la pestaña `MAPEAR DATOS` y completa los siguientes pasos:
+Sitúate en la pestaña `MAPEAR DATOS` y completa los siguientes pasos:
 
 <p align="center">  
 <img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/map_esp.png" width="80%">
@@ -589,7 +589,7 @@ Situate en la pestaña `MAPEAR DATOS` y completa los siguientes pasos:
 
 
 ### Ejecutar scripts de análisis
-Si el mapeo se ha realizado correctamente es momento de ejecutar tus análisis. Situate en la pestaña `EJECUTAR ANÁLISIS` y completa los siguientes pasos:
+Si el mapeo se ha realizado correctamente es momento de ejecutar tus análisis. Sitúate en la pestaña `EJECUTAR ANÁLISIS` y completa los siguientes pasos:
 
 <p align="center">  
 <img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/analysis_esp.png" width="80%">
@@ -602,7 +602,7 @@ Si el mapeo se ha realizado correctamente es momento de ejecutar tus análisis. 
 
 ### Obtener ficheros de salida (outputs)
 
-Si los análisis se han ejecutado correctamente es momento de descargar los ficheros de salida. Situate en la pestaña `RESULTADOS` y completa los siguietes pasos:
+Si los análisis se han ejecutado correctamente es momento de descargar los ficheros de salida. Sitúate en la pestaña `RESULTADOS` y completa los siguietes pasos:
 
 <p align="center">  
 <img src="https://github.com/cienciadedatosysalud/manual_aspire/blob/main/.github/img/outputs_esp.png" width="80%">
