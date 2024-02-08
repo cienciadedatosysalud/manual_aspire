@@ -77,7 +77,7 @@ Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial
 ```mermaid
  timeline
     title Despliegue y ejecución de tu proyecto
-    Estructura de proyecto : Añadir estructura de trabajo obtenida del cdmb.
+    Estructura del proyecto : Añadir estructura de trabajo obtenida del cdmb.
                            : Añadir fichero env_project.yaml
                            : Añadir fichero Dockerfile
                            : Añadir fichero .dockerignore
@@ -102,7 +102,7 @@ Una vez hayas completado los tres primeros pasos podemos empezar con el tutorial
 
 ## Estructura del proyecto
 
-Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura de proyecto estandarizada. En concreto, este tutorial se basa en la integración de la estructura de proyecto del modelo común de datos generada a partir de la utilización de la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudarán a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
+Para poder empaquetar nuestro pipeline de análisis es necesario partir de una estructura del proyecto estandarizada. En concreto, este tutorial se basa en la integración de la estructura del proyecto del modelo común de datos generada a partir de la utilización de la librería Common Data Model Builder (cdmb) y elementos auxiliares que nos ayudarán a instalar las dependencias necesarias de nuestro código de análisis y el empaquetamiento usando ASPIRE.
 
 Tareas:
 - [ ] Añadir el fichero `env_project.yaml`
@@ -110,7 +110,7 @@ Tareas:
 - [ ] Añadir el fichero `.dockerignore`
 
 
-Obteniendo una estructura de proyecto como la siguiente:
+Obteniendo una estructura del proyecto como la siguiente:
 
 ![github repo structure](.github/img/github_repository.png)
 
