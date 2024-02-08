@@ -466,7 +466,7 @@ Tareas:
 
 Para el ejemplo ilustrativo seguiremos la siguiente nomenclatura. Nomenclatura que debe ser cambiada en tu proyecto:
 
-> * Registro de imagenes Docker: `ghcr.io`
+> * Registro de imágenes Docker: `ghcr.io`
 > * Propietario del repositorio: `cienciadedatosysalud`
 > * Nombre de la imagen Docker: `myproject_image`
 > * Versión de los análisis (`pipeline_version`): 3.0.3
@@ -487,7 +487,7 @@ docker build --build-arg pipeline_version=3.0.3 -t myproject_image .
 Observa el log que muestra la instrucción para confirmar que todas las dependencias se han creado correctamente.
 
 > [!NOTE]  
-> Aprende más sobre [construir imagenes Docker](https://docs.docker.com/engine/reference/commandline/build/).
+> Aprende más sobre [construir imágenes Docker](https://docs.docker.com/engine/reference/commandline/build/).
 
 
 ### Descargar (Pull) imagen de Docker
@@ -498,7 +498,7 @@ docker pull ghcr.io/cienciadedatosysalud/myproject_image:latest
 ```
 
 > [!NOTE]  
-> Aprende más sobre [descargar imagenes Docker](https://docs.docker.com/engine/reference/commandline/pull/).
+> Aprende más sobre [descargar imágenes Docker](https://docs.docker.com/engine/reference/commandline/pull/).
 
 
 ### Iniciar (Run) imagen Docker
@@ -513,7 +513,7 @@ docker run -d -p 127.0.0.1:3000:3000 --name myproject_container myproject_image:
 > Es posible que el puerto 3000 esté ocupado en tu equipo. En tal caso, cambia la instrucción a un puerto disponible `-p 127.0.0.1:3500:3000` .
 
 > [!NOTE]  
-> Aprende más sobre [ejecutar imagenes Docker](https://docs.docker.com/engine/reference/commandline/container_run/).
+> Aprende más sobre [ejecutar imágenes Docker](https://docs.docker.com/engine/reference/commandline/container_run/).
 
 ### [Opcional] Actualizar imagen Docker
 A lo largo del ciclo de vida del software es posible que nuestro código de análisis necesite arreglar algunos fallos. 
@@ -546,7 +546,7 @@ docker run -d -p 127.0.0.1:3000:3000 --name myproject_container ghcr.io/cienciad
 ```
 
 > [!NOTE]  
-> Aprende más sobre [borrar imagenes Docker](https://docs.docker.com/engine/reference/commandline/rmi/).
+> Aprende más sobre [borrar imágenes Docker](https://docs.docker.com/engine/reference/commandline/rmi/).
 
 > [!NOTE]  
 > Aprende más sobre [borrar contenedores Docker](https://docs.docker.com/engine/reference/commandline/rm/).
