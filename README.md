@@ -876,7 +876,7 @@ Task:
 
 ### Add logo
 
-APIRE allows you to change the logo displayed on the app's landing page. Follow the steps below to do it correctly:
+ASPIRE allows you to change the logo displayed on the app's landing page. Follow the steps below to do it correctly:
 
 1- Add your logo to the folder structure.
 
