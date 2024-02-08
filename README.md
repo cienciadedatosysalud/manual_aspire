@@ -617,6 +617,20 @@ Si los análisis se han ejecutado correctamente es momento de descargar los fich
 
 ## Referencias
 
+- Grupo de Ciencia de datos para la investigación en servicios y políticas sanitarias: https://cienciadedatosysalud.org/
+- Librería Common Data Model Builder:https://github.com/cienciadedatosysalud/cdmb
+- Analytic Software Pipeline Interface for Reproducible Execution (ASPIRE): https://github.com/cienciadedatosysalud/ASPIRE
+- Comunidad Atlas VPM en Zenodo: https://zenodo.org/communities/atlasvpm
+- Python: https://www.python.org/
+- R: https://www.r-project.org/
+- Quarto: https://quarto.org/
+- Micromamba: https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html
+- GitHub: https://docs.github.com/en
+- Docker: https://www.docker.com/
+- ORCID: https://orcid.org/
+- Zenodo: https://zenodo.org/
+- OpenAIRE: https://www.openaire.eu/
+
 
 # How to deploy your analysis pipeline using ASPIRE
 
@@ -1217,3 +1231,17 @@ If the analyses have been executed correctly, it is time to download the output 
 1. Download the necessary files or download all of them
 
 ## References
+
+- Data Science for Health Services and Policy Research group: https://cienciadedatosysalud.org/en/
+- Common Data Model Builder library :https://github.com/cienciadedatosysalud/cdmb
+- Analytic Software Pipeline Interface for Reproducible Execution (ASPIRE): https://github.com/cienciadedatosysalud/ASPIRE
+- Atlas VPM community in Zenodo: https://zenodo.org/communities/atlasvpm
+- Python: https://www.python.org/
+- R: https://www.r-project.org/
+- Quarto: https://quarto.org/
+- Micromamba: https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html
+- GitHub: https://docs.github.com/en
+- Docker: https://www.docker.com/
+- ORCID: https://orcid.org/
+- Zenodo: https://zenodo.org/
+- OpenAIRE: https://www.openaire.eu/
