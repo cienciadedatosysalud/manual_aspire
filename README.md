@@ -129,7 +129,7 @@ En este apartado trabajaremos los elementos que se encargan de instalar las depe
 
 ASPIRE usa [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) para la gestión de dependencias de librerías y paquetes. Micromamba es una versión ligera y rápida de Mamba, un gestor de paquetes y entornos para Python y otros lenguajes.
 
-La imagen base de ASPIRE (imagen Docker) tiene instalado por defecto el siguiente conjunto de tecnologías/programas (más información, enlace al README con lo instalado).
+La imagen base de ASPIRE (imagen Docker) tiene instalado por defecto el siguiente conjunto de tecnologías/programas.
 
 - Python
 - R
@@ -747,7 +747,7 @@ In this section we work on the elements in charge of installing the dependencies
 
 ASPIRE uses [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) to manage libraries and packages dependencies. Micromamba is a tiny version of the mamba package manager, a package and environment manager for Python and other languages.
 
-The ASPIRE base image (Docker image) has the following set of technologies/sofware installed by default (for more info, ).
+The ASPIRE base image (Docker image) has the following set of technologies/sofware installed by default.
 
 - Python
 - R
